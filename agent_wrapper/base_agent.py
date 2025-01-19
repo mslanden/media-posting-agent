@@ -1,5 +1,5 @@
 class AgentWrapper:
-    def __init__(self, framework):
+    def __init__(self, framework, api_key=None):
         if framework == "openai":
             from .openai_agent import OpenAIAgent
             self.agent = OpenAIAgent()
@@ -8,7 +8,7 @@ class AgentWrapper:
             self.agent = AnthropicAgent()
         elif framework == "gemini":
             from .gemini_agent import GeminiAgent
-            self.agent = GeminiAgent()
+            self.agent = GeminiAgent(api_key)
         else:
             raise ValueError("Unsupported framework")
 

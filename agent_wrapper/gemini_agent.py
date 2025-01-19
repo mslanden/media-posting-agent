@@ -1,6 +1,9 @@
 import requests
 
 class GeminiAgent:
+    def __init__(self, api_key):
+        self.api_key = api_key
+
     def run(self, prompt):
         try:
             response = requests.post(
