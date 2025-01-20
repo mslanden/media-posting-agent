@@ -79,16 +79,20 @@
                 <div id="api-keys">
                     <h2>API Keys</h2>
                     <form id="api-keys-form">
-                        <label for="openai-key">OpenAI Key:</label>
-                        <input type="text" id="openai-key" name="openai" />
-                        <label for="anthropic-key">Anthropic Key:</label>
-                        <input
-                            type="text"
-                            id="anthropic-key"
-                            name="anthropic"
-                        />
-                        <label for="gemini-key">Gemini Key:</label>
-                        <input type="text" id="gemini-key" name="gemini" />
+                        <ul id="api-keys-list">
+                            <li>
+                                <label for="openai-key">OpenAI Key:</label>
+                                <input type="text" id="openai-key" name="openai" />
+                            </li>
+                            <li>
+                                <label for="anthropic-key">Anthropic Key:</label>
+                                <input type="text" id="anthropic-key" name="anthropic" />
+                            </li>
+                            <li>
+                                <label for="gemini-key">Gemini Key:</label>
+                                <input type="text" id="gemini-key" name="gemini" />
+                            </li>
+                        </ul>
                         <button type="submit">Save</button>
                     </form>
                 </div>
