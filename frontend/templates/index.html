@@ -96,32 +96,26 @@
             </div>
             <div id="sidebar">
                 <div id="sidebar-tabs">
-                    <button onclick="showTab('scheduled-posts')">
-                        Scheduled Posts
-                    </button>
-                    <button onclick="showTab('api-keys')">API Keys</button>
+                    <select id="sidebar-select">
+                        <option value="scheduled-posts">Scheduled Posts</option>
+                        <option value="api-keys">API Keys</option>
+                    </select>
                 </div>
                 <div id="scheduled-posts">
                     <h2>Scheduled Posts</h2>
-                    <ul id="scheduled-posts-list"></ul>
+                    <select id="scheduled-posts-select">
+                        <option value="">Select a post</option>
+                        </select>
                 </div>
                 <div id="api-keys">
                     <h2>API Keys</h2>
                     <form id="api-keys-form">
-                        <ul id="api-keys-list">
-                            <li>
-                                <label for="openai-key">OpenAI Key:</label>
-                                <input type="text" id="openai-key" name="openai" />
-                            </li>
-                            <li>
-                                <label for="anthropic-key">Anthropic Key:</label>
-                                <input type="text" id="anthropic-key" name="anthropic" />
-                            </li>
-                            <li>
-                                <label for="gemini-key">Gemini Key:</label>
-                                <input type="text" id="gemini-key" name="gemini" />
-                            </li>
-                        </ul>
+                        <select id="api-keys-select">
+                            <option value="openai">OpenAI</option>
+                            <option value="anthropic">Anthropic</option>
+                            <option value="gemini">Gemini</option>
+                        </select>
+                        <input type="text" id="api-key-input" />
                         <button type="submit">Save</button>
                     </form>
                 </div>
