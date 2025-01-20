@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Marketing Agent Workflow</title>
+        <title>Marketing Agent</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -49,7 +49,7 @@
             }
             #chat-form button {
                 padding: 10px 20px;
-                background-color: #4CAF50;
+                background-color: #4caf50;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -105,7 +105,7 @@
                     <h2>Scheduled Posts</h2>
                     <select id="scheduled-posts-select">
                         <option value="">Select a post</option>
-                        </select>
+                    </select>
                 </div>
                 <div id="api-keys">
                     <h2>API Keys</h2>
@@ -186,9 +186,11 @@
 
             showTab("scheduled-posts");
 
-            document.getElementById("sidebar-select").addEventListener("change", (event) => {
-                showTab(event.target.value);
-            });
+            document
+                .getElementById("sidebar-select")
+                .addEventListener("change", (event) => {
+                    showTab(event.target.value);
+                });
         </script>
     </body>
 </html>
