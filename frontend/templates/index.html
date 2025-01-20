@@ -151,7 +151,25 @@
                 </div>
                 <div id="settings">
                     <h2>Settings</h2>
-                    </div>
+                    <ul>
+                        <li>
+                            <label for="dark-mode-toggle">Dark Mode:</label>
+                            <input type="checkbox" id="dark-mode-toggle">
+                        </li>
+                        <li>
+                            <label for="model-select">Model:</label>
+                            <select id="model-select">
+                                <option value="openai">OpenAI</option>
+                                <option value="anthropic">Anthropic</option>
+                                <option value="gemini">Gemini</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="api-key-input">API Key:</label>
+                            <input type="text" id="api-key-input" />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
