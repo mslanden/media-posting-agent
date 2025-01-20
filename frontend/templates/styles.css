@@ -18,6 +18,17 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
 }
+/* Remove or comment out existing styles that conflict with Bootstrap */
+#sidebar-tabs {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+#scheduled-posts,
+#api-keys,
+#settings {
+    display: block; /* Ensure sections are visible */
+}
 header {
     background-color: #4CAF50; /* Example color - change as needed */
     padding: 20px;
