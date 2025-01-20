@@ -240,22 +240,16 @@
                 });
 
             function showTab(tabId) {
-                document.getElementById("scheduled-posts").style.display =
-                    "none";
-                document.getElementById("api-keys").style.display = "none";
-                document.getElementById("scheduled-posts").style.display = "none";
-                document.getElementById("api-keys").style.display = "none";
-                document.getElementById("scheduled-posts").style.display = "none";
-                document.getElementById("api-keys").style.display = "none";
-                document.getElementById("settings").style.display = "none";
-                document.getElementById(tabId).style.display = "block";
+                ['scheduled-posts', 'api-keys', 'settings'].forEach(id => {
+                    document.getElementById(id).style.display = 'none';
+                });
+                document.getElementById(tabId).style.display = 'block';
             }
 
-            showTab("scheduled-posts");
+            showTab('scheduled-posts');
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             if (darkModeToggle) {
                 darkModeToggle.addEventListener('change', () => {
-                    document.body.classList.toggle('dark-mode');
                     document.body.classList.toggle('dark-mode');
                 });
             }
