@@ -1,240 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Marketing Agent</title>
-        <style>
-            :root {
-                --bg-color: #fff;
-                --text-color: #333;
-                --header-bg: #f0f0f0;
-            }
-            .dark-mode {
-                --bg-color: #333;
-                --text-color: #fff;
-                --header-bg: #222;
-            }
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-                background-color: var(--bg-color);
-                color: var(--text-color);
-            }
-            header {
-                background-color: var(--header-bg);
-                padding: 20px;
-                text-align: left;
-                font-size: 1em;
-                font-weight: bold;
-            }
-            header h1 {
-                margin: 0;
-            }
-            #main {
-                display: flex;
-                flex: 1;
-            }
-            #chat-container {
-                display: flex;
-                flex: 2;
-                flex-direction: column;
-                padding: 20px;
-                justify-content: flex-end;
-            }
-            #chat-form,
-            #url-form {
-                display: flex;
-                align-items: center;
-                margin-top: auto;
-            }
-            #chat-form input[type="text"],
-            #url-form input[type="url"] {
-                width: 80%;
-                padding: 10px;
-                margin-right: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-            #chat-form button,
-            #url-form button {
-                padding: 10px 20px;
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            #chat-form button:hover,
-            #url-form button:hover {
-                background-color: #45a049;
-            }
-            .wide-input {
-                width: 80%;
-                padding: 10px;
-                margin-right: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-            #sidebar {
-                flex: 1;
-                padding: 20px;
-                border-left: 1px solid #ccc;
-                display: flex;
-                flex-direction: column;
-            }
-            #sidebar-tabs {
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 20px;
-            }
-            #scheduled-posts,
-            #api-keys,
-            #settings {
-                display: none;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1>Marketing Agent</h1>
-        </header>
-        <div id="main">
-            <div id="chat-container">
-                <div id="chat-box">
-                    <h2 style="text-align: center; margin-bottom: 20px">
-                        Create
-                    </h2>
-                    <form id="chat-form">
-                        <ul style="list-style-type: none; padding: 0">
-                            <li style="margin-bottom: 10px">
-                                <label for="message">Comments:</label>
-                                <input
-                                    type="text"
-                                    id="message"
-                                    name="message"
-                                    placeholder="Type your message here..."
-                                    required
-                                />
-                            </li>
-                            <li style="margin-bottom: 10px">
-                                <label for="url">Website:</label>
-                                <input
-                                    type="url"
-                                    id="url"
-                                    name="url"
-                                    placeholder="Enter URL"
-                                    class="wide-input"
-                                />
-                            </li>
-                            <li style="margin-bottom: 10px">
-                                <label for="image">Image:</label>
-                                <input
-                                    type="file"
-                                    id="image"
-                                    name="image"
-                                    accept="image/*"
-                                />
-                            </li>
-                            <li style="margin-bottom: 10px">
-                                <label for="mediaType">Output type:</label>
-                                <select id="mediaType" name="mediaType">
-                                    <option value="tweet">Tweet</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="article">Article</option>
-                                    <option value="newsletter">
-                                        Newsletter
-                                    </option>
-                                </select>
-                            </li>
-                        </ul>
-                    </form>
-                    <button
-                        type="submit"
-                        style="
-                            margin-top: 10px;
-                            margin-left: auto;
-                            display: block;
-                        "
-                    >
-                        Submit
-                    </button>
-                    <br />
-                    <div id="chat-log"></div>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Agent</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Marketing Agent</h1>
+    </header>
+    <div id="main">
+        <div id="chat-container">
+            <div id="chat-box">
+                <h2 style="text-align: center; margin-bottom: 20px">Create</h2>
+                <form id="chat-form">
+                    <ul style="list-style-type: none; padding: 0">
+                        <li style="margin-bottom: 10px">
+                            <label for="message">Comments:</label>
+                            <input type="text" id="message" name="message" placeholder="Type your message here..." required>
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <label for="url">Website:</label>
+                            <input type="url" id="url" name="url" placeholder="Enter URL" class="wide-input">
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <label for="image">Image:</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <label for="mediaType">Output type:</label>
+                            <select id="mediaType" name="mediaType">
+                                <option value="tweet">Tweet</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="article">Article</option>
+                                <option value="newsletter">Newsletter</option>
+                            </select>
+                        </li>
+                    </ul>
+                </form>
+                <button type="submit" style="margin-top: 10px; margin-left: auto; display: block;">Submit</button>
+                <br>
+                <div id="chat-log"></div>
             </div>
-            <div id="sidebar">
-                <div id="sidebar-tabs">
-                    <select id="sidebar-select">
-                        <option value="scheduled-posts">Scheduled Posts</option>
-                        <option value="api-keys">API Keys</option>
-                        <option value="settings">Settings</option>
+        </div>
+        <div id="sidebar">
+            <div id="sidebar-tabs">
+                <select id="sidebar-select">
+                    <option value="scheduled-posts">Scheduled Posts</option>
+                    <option value="api-keys">API Keys</option>
+                    <option value="settings">Settings</option>
+                </select>
+            </div>
+            <div id="scheduled-posts">
+                <h2>Scheduled Posts</h2>
+                <select id="scheduled-posts-select">
+                    <option value="">Select a post</option>
+                </select>
+            </div>
+            <div id="settings">
+                <h2>Settings</h2>
+                <div>
+                    <label for="dark-mode-toggle">Dark Mode:</label>
+                    <input type="checkbox" id="dark-mode-toggle">
+                </div>
+                <div>
+                    <label for="model-select">Model:</label>
+                    <select id="model-select">
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic</option>
+                        <option value="gemini">Gemini</option>
                     </select>
                 </div>
-                <div id="scheduled-posts">
-                    <h2>Scheduled Posts</h2>
-                    <select id="scheduled-posts-select">
-                        <option value="">Select a post</option>
-                    </select>
-                </div>
-                <div id="settings">
-                    <h2>Settings</h2>
-                    <div>
-                        <label for="dark-mode-toggle">Dark Mode:</label>
-                        <input type="checkbox" id="dark-mode-toggle" />
-                    </div>
-                    <div>
-                        <label for="model-select">Model:</label>
-                        <select id="model-select">
-                            <option value="openai">OpenAI</option>
-                            <option value="anthropic">Anthropic</option>
-                            <option value="gemini">Gemini</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="api-key-input">API Key:</label>
-                        <input type="text" id="api-key-input" />
-                    </div>
+                <div>
+                    <label for="api-key-input">API Key:</label>
+                    <input type="text" id="api-key-input">
                 </div>
             </div>
         </div>
-
-        <script>
-            // Function to show the selected tab
-            function showTab(tabId) {
-                ["scheduled-posts", "api-keys", "settings"].forEach((id) => {
-                    document.getElementById(id).style.display =
-                        id === tabId ? "block" : "none";
-                });
-            }
-
-            // Initialize sidebar with Scheduled Posts visible
-            document.addEventListener("DOMContentLoaded", () => {
-                // Show the default tab on load
-                showTab("scheduled-posts");
-
-                // Handle sidebar dropdown change
-                document
-                    .getElementById("sidebar-select")
-                    .addEventListener("change", (event) => {
-                        const selectedTab = event.target.value;
-                        showTab(selectedTab);
-                    });
-
-                // Handle dark mode toggle
-                const darkModeToggle =
-                    document.getElementById("dark-mode-toggle");
-                darkModeToggle.addEventListener("change", (event) => {
-                    document.body.classList.toggle(
-                        "dark-mode",
-                        event.target.checked,
-                    );
-                });
-            });
-        </script>
-    </body>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
 </html>
