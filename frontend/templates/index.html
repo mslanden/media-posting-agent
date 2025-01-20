@@ -35,17 +35,26 @@
                 padding: 20px;
                 justify-content: flex-end; /* Align items to the bottom */
             }
-            #chat-form {
+            #chat-form, #url-form {
                 display: flex;
-                justify-content: center; /* Center horizontally */
-                margin-top: auto; /* Push to the bottom */
+                align-items: center; /* Vertically center items */
+                margin-top: auto;
             }
-            #chat-form input[type="text"] {
+            #chat-form input[type="text"],
+            #url-form input[type="url"] {
                 width: 80%;
                 padding: 10px;
                 margin-right: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
+            }
+            #chat-form button, #url-form button {
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
             }
             #chat-form button {
                 padding: 10px 20px;
