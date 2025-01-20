@@ -226,10 +226,14 @@
                 document.getElementById("scheduled-posts").style.display =
                     "none";
                 document.getElementById("api-keys").style.display = "none";
+                document.getElementById("scheduled-posts").style.display = "none";
+                document.getElementById("api-keys").style.display = "none";
+                document.getElementById("settings").style.display = "none";
                 document.getElementById(tabId).style.display = "block";
             }
 
             showTab("scheduled-posts");
+            document.getElementById("settings").style.display = "none";
 
             document
                 .getElementById("sidebar-select")
