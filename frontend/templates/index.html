@@ -245,6 +245,8 @@
             }
 
             showTab('scheduled-posts');
+            //Initially hide the settings div
+            document.getElementById('settings').style.display = 'none';
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             if (darkModeToggle) {
                 darkModeToggle.addEventListener('change', () => {
