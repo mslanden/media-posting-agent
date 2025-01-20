@@ -185,6 +185,10 @@
             }
 
             showTab("scheduled-posts");
+
+            document.getElementById("sidebar-select").addEventListener("change", (event) => {
+                showTab(event.target.value);
+            });
         </script>
     </body>
 </html>
