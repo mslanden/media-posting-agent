@@ -100,13 +100,27 @@
                 <div id="chat-box">
                     <h2 style="text-align: center; margin-bottom: 20px;">Create</h2>
                     <form id="chat-form">
+                        <p style="text-align: left; margin-bottom: 5px;">Comments:</p>
                         <input
                             type="text"
                             name="message"
                             placeholder="Type your message here..."
                             required
                         />
-                        <button type="submit">Send</button>
+                        <br>
+                    </form>
+                    <br>
+                    <form id="url-form">
+                        <p style="text-align: left; margin-bottom: 5px;">Website:</p>
+                        <input type="url" name="url" placeholder="Enter URL" class="wide-input" />
+                        <select name="mediaType">
+                            <option value="tweet">Tweet</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="article">Article</option>
+                            <option value="newsletter">Newsletter</option>
+                        </select>
+                        <p style="text-align: left; margin-bottom: 5px;">Output type:</p>
+                        <button type="submit" style="margin-top: 10px;">Send</button>
                     </form>
                     <br>
                     <form id="url-form">
