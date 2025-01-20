@@ -19,7 +19,7 @@ body {
     color: var(--text-color);
 }
 header {
-    background-color: var(--header-bg);
+    background-color: #4CAF50; /* Example color - change as needed */
     padding: 20px;
     text-align: left;
     font-size: 1em;
