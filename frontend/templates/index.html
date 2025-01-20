@@ -5,6 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Marketing Agent</title>
         <style>
+            .dark-mode {
+                background-color: #333;
+                color: white;
+            }
+            .dark-mode header {
+                background-color: #222;
+            }
             body {
                 font-family: Arial, sans-serif;
                 margin: 0;
@@ -154,7 +161,7 @@
                     <ul>
                         <li>
                             <label for="dark-mode-toggle">Dark Mode:</label>
-                            <input type="checkbox" id="dark-mode-toggle">
+                            <input type="checkbox" id="dark-mode-toggle" class="dark-mode-toggle">
                         </li>
                         <li>
                             <label for="model-select">Model:</label>
@@ -241,6 +248,10 @@
             }
 
             showTab("scheduled-posts");
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            darkModeToggle.addEventListener('change', () => {
+                document.body.classList.toggle('dark-mode');
+            });
 
             document
                 .getElementById("sidebar-select")
