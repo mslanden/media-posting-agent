@@ -42,7 +42,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
@@ -62,13 +62,16 @@ def generate_content():
 def save_settings():
     data = request.get_json()
     api_key = data.get("api_key")
+    llm_model = data.get("llm_model")
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
+    if not llm_model:
+        return jsonify({"error": "No LLM model provided"}), 400
 
     try:
-        with open(".env", "w") as f:
-            f.write(f"API_KEY={api_key}\n")
-        return jsonify({"message": "API key saved successfully"}), 200
+        with open(".env", "a") as f:
+            f.write(f"{llm_model.upper()}_API_KEY={api_key}\n")
+        return jsonify({"message": f"{llm_model} API key saved successfully"}), 200
     except Exception as e:
         return jsonify({"error": f"Failed to save API key: {e}"}), 500
 
