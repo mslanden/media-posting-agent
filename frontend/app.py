@@ -4,11 +4,15 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, jsonify
 from utils import scrape_and_format_url, save_markdown_file
 from agents.tweet_agent import TweetAgent
+import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
 
 app = Flask(__name__)
 load_dotenv()
+
+settings = load_settings()
+os.environ["API_KEY"] = settings.get("api_key", "")
 
 @app.route("/")
 def home():
