@@ -29,7 +29,7 @@ def scrape_and_format_url(url):
     except Exception as e:
         return f"Error: An unexpected error occurred: {e}"
 
-def save_markdown_file(content, filename="output.md"):
+def save_markdown_file(content, filename="webdata.md"):
     try:
         with open(filename, "w", encoding="utf-8") as f:
             f.write(content)
