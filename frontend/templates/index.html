@@ -14,7 +14,7 @@
             }
         </style>
     </head>
-    <body>
+    <body {% if settings.dark_mode %}class="dark-mode"{% endif %}>
         <header>
             <h1>Marketing Agent</h1>
         </header>
@@ -95,7 +95,7 @@
                     <h2>Settings</h2>
                      <div>
                         <label for="dark-mode-toggle">Dark Mode:</label>
-                        <input type="checkbox" id="dark-mode-toggle" />
+                        <input type="checkbox" id="dark-mode-toggle" {% if settings.dark_mode %}checked{% endif %} />
                     </div>
                      <div>
                         <label for="llm-model-select">LLM Model:</label>
@@ -194,6 +194,7 @@
                 event.preventDefault();
                 const selectedModel = document.getElementById('llm-model-select').value;
                 let apiKey = '';
+                const darkMode = document.getElementById('dark-mode-toggle').checked;
 
                 if (selectedModel === 'openai') {
                     apiKey = document.getElementById('openai-api-key').value;
@@ -208,7 +209,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ api_key: apiKey, llm_model: selectedModel }),
+                    body: JSON.stringify({ api_key: apiKey, llm_model: selectedModel, dark_mode: darkMode }),
                 })
                 .then(response => response.json())
                 .then(data => {

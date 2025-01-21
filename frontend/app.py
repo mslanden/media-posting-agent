@@ -44,7 +44,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
@@ -65,6 +65,7 @@ def save_settings_route():
     data = request.get_json()
     api_key = data.get("api_key")
     llm_model = data.get("llm_model")
+    dark_mode = data.get("dark_mode")
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
     if not llm_model:
@@ -72,7 +73,8 @@ def save_settings_route():
 
     settings = {
         "api_key": api_key,
-        "llm_model": llm_model
+        "llm_model": llm_model,
+        "dark_mode": dark_mode
     }
     if save_settings(settings):
         return jsonify({"message": f"{llm_model} API key saved successfully"}), 200
