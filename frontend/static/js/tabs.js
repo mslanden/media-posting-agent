@@ -25,7 +25,9 @@ function showTab(tabId) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const initialTab = document.getElementById("sidebar-select").value;
-  showTab(initialTab);
+    if (initialTab === "settings") {
+        showTab(initialTab);
+    }
 
   document
     .getElementById("sidebar-select")
