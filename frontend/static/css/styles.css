@@ -74,8 +74,6 @@ body.dark-mode #sidebar {
 }
 
 #chat-form button {
-    grid-column: 2; /* Align button to the second column */
-    justify-self: start; /* Align the button to the start of the column */
     padding: 8px 12px;
     background-color: #4caf50;
     color: white;
@@ -90,7 +88,6 @@ body.dark-mode #sidebar {
 }
 
 #scrape-button {
-    margin-top: 10px;
     padding: 8px 12px;
     background-color: #4caf50;
     color: white;
