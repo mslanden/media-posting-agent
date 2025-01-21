@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, jsonify
 from utils import scrape_and_format_url, save_markdown_file
 from agents.tweet_agent import TweetAgent
 from dotenv import load_dotenv
+from settings import save_settings, load_settings
 
 app = Flask(__name__)
 load_dotenv()
@@ -42,7 +43,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
@@ -59,7 +60,7 @@ def generate_content():
         return jsonify({"error": "Unsupported media type"}), 400
 
 @app.route("/save_settings", methods=["POST"])
-def save_settings():
+def save_settings_route():
     data = request.get_json()
     api_key = data.get("api_key")
     llm_model = data.get("llm_model")
@@ -68,12 +69,14 @@ def save_settings():
     if not llm_model:
         return jsonify({"error": "No LLM model provided"}), 400
 
-    try:
-        with open(".env", "a") as f:
-            f.write(f"{llm_model.upper()}_API_KEY={api_key}\n")
+    settings = {
+        "api_key": api_key,
+        "llm_model": llm_model
+    }
+    if save_settings(settings):
         return jsonify({"message": f"{llm_model} API key saved successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": f"Failed to save API key: {e}"}), 500
+    else:
+        return jsonify({"error": f"Failed to save settings"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
