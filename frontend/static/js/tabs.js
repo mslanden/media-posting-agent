@@ -24,7 +24,8 @@ function showTab(tabId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  showTab("scheduled-posts");
+  const initialTab = document.getElementById("sidebar-select").value;
+  showTab(initialTab);
 
   document
     .getElementById("sidebar-select")
