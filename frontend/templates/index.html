@@ -91,11 +91,6 @@
                 </div>
             </div>
             <div id="sidebar">
-                <div id="sidebar-tabs">
-                    <select id="sidebar-select">
-                        <option value="settings">Settings</option>
-                    </select>
-                </div>
                 <div id="settings" >
                     <h2>Settings</h2>
                      <div>
@@ -118,7 +113,6 @@
             </div>
         </div>
 
-        <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
         <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
         <script>
             document.getElementById('scrape-button').addEventListener('click', function(event) {
