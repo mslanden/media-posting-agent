@@ -5,9 +5,9 @@
 }
 
 body.dark-mode {
-    --bg-color: #2c2c2c;
-    --text-color: #d4d4d4;
-    --header-bg: #3a3a3a;
+    --bg-color: #333333;
+    --text-color: #d3d3d3;
+    --header-bg: #444444;
 }
 
 body {
