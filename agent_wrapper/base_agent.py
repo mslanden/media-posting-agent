@@ -7,7 +7,7 @@ class AgentWrapper:
             from .anthropic_agent import AnthropicAgent
             self.agent = AnthropicAgent(api_key)
         elif framework == "gemini":
-            from .gemini_agent import GeminiAgent(api_key)
+            from .gemini_agent import GeminiAgent
             self.agent = GeminiAgent(api_key)
         else:
             raise ValueError("Unsupported framework")
