@@ -16,11 +16,11 @@ def scrape_url():
     url = request.form.get("url")
     if not url:
         return jsonify({"error": "No URL provided"}), 400
-    
+
     markdown_content = scrape_and_format_url(url)
     if "Error" in markdown_content:
-         return jsonify({"error": markdown_content}), 500
-    
+        return jsonify({"error": markdown_content}), 500
+
     if save_markdown_file(markdown_content):
         return jsonify({"message": "Web data scraped and saved successfully"}), 200
     else:
@@ -38,7 +38,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_
+        if "Error" in scraped_data:
             return jsonify({"error": scraped_data}), 500
 
     if media_type == "tweet":
