@@ -34,9 +34,9 @@ def scrape_url():
     else:
         return jsonify({"error": "Failed to save web data"}), 500
 
-@app.route("/generate", methods=["POST"])
 import uuid
 
+@app.route("/generate", methods=["POST"])
 def generate_content():
     message = request.form.get("message")
     url = request.form.get("url")
