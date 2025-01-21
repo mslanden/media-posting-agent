@@ -42,7 +42,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_
+        if "Error" in scraped_data:
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
@@ -64,7 +64,7 @@ def save_settings():
     api_key = data.get("api_key")
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
-    
+
     try:
         with open(".env", "w") as f:
             f.write(f"API_KEY={api_key}\n")
