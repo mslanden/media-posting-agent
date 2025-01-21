@@ -39,8 +39,9 @@ def generate_content():
     message = request.form.get("message")
     url = request.form.get("url")
     media_type = request.form.get("mediaType")
-    api_key = request.form.get("api_key")
-    llm_model = request.form.get("llm_model")
+    settings = load_settings()
+    api_key = settings.get("api_key")
+    llm_model = settings.get("llm_model")
 
     if not message:
         return jsonify({"error": "No message provided"}), 400
