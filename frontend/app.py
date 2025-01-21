@@ -31,6 +31,8 @@ def generate_content():
     message = request.form.get("message")
     url = request.form.get("url")
     media_type = request.form.get("mediaType")
+    api_key = request.form.get("api_key")
+    llm_model = request.form.get("llm_model")
 
     if not message:
         return jsonify({"error": "No message provided"}), 400
@@ -38,11 +40,14 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
+    if not api_key:
+        return jsonify({"error": "No API key provided"}), 400
+
     if media_type == "tweet":
-        tweet_agent = TweetAgent()
+        tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
         tweet = tweet_agent.generate_tweet(scraped_data, message)
         if tweet_agent.save_tweet(tweet):
             return jsonify({"message": tweet}), 200
