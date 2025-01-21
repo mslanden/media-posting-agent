@@ -12,5 +12,5 @@ class AgentWrapper:
         else:
             raise ValueError("Unsupported framework")
 
-    def run(self, prompt):
-        return self.agent.run(prompt)
+    def run(self, prompt, image_path=None):
+        return self.agent.run(prompt, image_path)

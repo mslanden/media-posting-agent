@@ -4,8 +4,10 @@ class AnthropicAgent:
     def __init__(self, api_key):
         self.api_key = api_key
 
-    def run(self, prompt):
+    def run(self, prompt, image_path=None):
         try:
+            if image_path:
+                prompt += f" Also, use the information from this image: {image_path}"
             response = requests.post(
                 "https://api.anthropic.com/completion",
                 headers={"Authorization": f"Bearer {self.api_key}"},

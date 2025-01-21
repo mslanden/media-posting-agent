@@ -6,8 +6,10 @@ class GeminiAgent:
         self.api_key = api_key
         self.url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
 
-    def run(self, prompt):
+    def run(self, prompt, image_path=None):
         try:
+            if image_path:
+                prompt += f" Also, use the information from this image: {image_path}"
             response = requests.post(
                 self.url,
                 headers={
