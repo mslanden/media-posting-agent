@@ -4,8 +4,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, jsonify
 from utils import scrape_and_format_url, save_markdown_file
 from agents.tweet_agent import TweetAgent
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+load_dotenv()
 
 @app.route("/")
 def home():
@@ -40,7 +42,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
@@ -55,6 +57,20 @@ def generate_content():
             return jsonify({"error": "Failed to save tweet"}), 500
     else:
         return jsonify({"error": "Unsupported media type"}), 400
+
+@app.route("/save_settings", methods=["POST"])
+def save_settings():
+    data = request.get_json()
+    api_key = data.get("api_key")
+    if not api_key:
+        return jsonify({"error": "No API key provided"}), 400
+    
+    try:
+        with open(".env", "w") as f:
+            f.write(f"API_KEY={api_key}\n")
+        return jsonify({"message": "API key saved successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to save API key: {e}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -109,6 +109,7 @@
                             <option value="anthropic">Anthropic</option>
                         </select>
                     </div>
+                    <button id="save-settings-button" style="margin-top: 10px;">Save Settings</button>
                 </div>
             </div>
         </div>
@@ -161,6 +162,30 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred while generating the output.');
+                });
+            });
+
+            document.getElementById('save-settings-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                const apiKey = document.getElementById('api-key-input').value;
+                fetch('/save_settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ api_key: apiKey }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        alert('Success: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while saving settings.');
                 });
             });
         </script>
