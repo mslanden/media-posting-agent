@@ -5,9 +5,9 @@
 }
 
 body.dark-mode {
-    --bg-color: #2c2c2c; /* Softer dark mode background */
-    --text-color: #e0e0e0; /* Softer text contrast */
-    --header-bg: #3a3a3a; /* Softer header background */
+    --bg-color: #2c2c2c;
+    --text-color: #e0e0e0;
+    --header-bg: #3a3a3a;
 }
 
 body {
@@ -52,6 +52,20 @@ body.dark-mode header {
 
 body.dark-mode #sidebar {
     border-left: 1px solid #555;
+}
+
+header button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+header button:hover {
+    background-color: #45a049;
 }
 
 #chat-form {

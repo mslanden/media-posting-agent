@@ -70,6 +70,10 @@
     <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
         <header>
             <h1 style="padding-left: 20px">Marketing Agent</h1>
+            <div style="position: absolute; top: 10px; right: 20px;">
+                <button id="settings-button" style="margin-right: 10px;">Settings</button>
+                <button id="scheduled-posts-button">Scheduled Posts</button>
+            </div>
         </header>
         <div id="main">
             <div id="chat-container">
@@ -147,13 +151,8 @@
                     </form>
                 </div>
             </div>
-            <div id="sidebar">
-                <select id="sidebar-select">
-                    <option value="scheduled-posts">Scheduled Posts</option>
-                    <option value="api-keys">API Keys</option>
-                    <option value="settings">Settings</option>
-                </select>
-                <div id="scheduled-posts">
+            <div id="sidebar" style="display: none; position: absolute; top: 0; right: 0; height: 100%; width: 300px; background-color: var(--bg-color); border-left: 1px solid #ccc; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.2);">
+                <div id="scheduled-posts" style="display: none;">
                     <h2>Scheduled Posts</h2>
                     <ul id="post-list">
                     </ul>

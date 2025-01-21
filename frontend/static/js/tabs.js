@@ -19,21 +19,33 @@ function fetchPosts() {
 }
 
 function showTab(tabId) {
-    ["scheduled-posts", "api-keys", "settings"].forEach((id) => {
+    const sidebar = document.getElementById("sidebar");
+    const allTabs = ["scheduled-posts", "api-keys", "settings"];
+    
+    if (sidebar.style.display === "block" && sidebar.dataset.currentTab === tabId) {
+        sidebar.style.display = "none";
+        sidebar.dataset.currentTab = "";
+        return;
+    }
+
+    sidebar.style.display = "block";
+    sidebar.dataset.currentTab = tabId;
+
+    allTabs.forEach(id => {
         document.getElementById(id).style.display = id === tabId ? "block" : "none";
     });
+
     if (tabId === "scheduled-posts") {
         fetchPosts();
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const initialTab = document.getElementById("sidebar-select").value;
-    showTab(initialTab);
+    document.getElementById("settings-button").addEventListener("click", () => {
+        showTab("settings");
+    });
 
-    document
-        .getElementById("sidebar-select")
-        .addEventListener("change", (event) => {
-            showTab(event.target.value);
-        });
+    document.getElementById("scheduled-posts-button").addEventListener("click", () => {
+        showTab("scheduled-posts");
+    });
 });
