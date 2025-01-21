@@ -21,6 +21,44 @@
             .wide-input {
                 width: 100%;
             }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            #chat-form {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 10px;
+            }
+            #chat-form label {
+                text-align: right;
+                padding-right: 10px;
+            }
+            #chat-form input,
+            #chat-form select {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+            #chat-form button,
+            #scrape-button {
+                padding: 10px 15px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+                margin-top: 10px;
+            }
+            #chat-form button:hover,
+            #scrape-button:hover {
+                background-color: #45a049;
+            }
+            #chat-form li {
+                margin-bottom: 0;
+            }
         </style>
     </head>
     <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
@@ -29,7 +67,7 @@
         </header>
         <div id="main">
             <div id="chat-container">
-                <div id="chat-box">
+                <div id="chat-box" class="container">
                     <h2 style="text-align: center; margin-bottom: 20px">
                         Create
                     </h2>
