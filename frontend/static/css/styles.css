@@ -1,13 +1,13 @@
 :root {
-    --bg-color: #fff;
+    --bg-color: #f9f9f9; /* Softer light mode background */
     --text-color: #333;
     --header-bg: #f0f0f0;
 }
 
 body.dark-mode {
-    --bg-color: #333333;
-    --text-color: #d3d3d3;
-    --header-bg: #444444;
+    --bg-color: #2c2c2c; /* Softer dark mode background */
+    --text-color: #e0e0e0; /* Softer text contrast */
+    --header-bg: #3a3a3a; /* Softer header background */
 }
 
 body {
@@ -54,15 +54,52 @@ body.dark-mode #sidebar {
     border-left: 1px solid #555;
 }
 
-#settings {
-    display: block;
+#chat-form {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two columns: labels and inputs */
+    gap: 10px;
+    align-items: center; /* Center items vertically */
 }
 
-#settings > div {
+#chat-form li {
+    display: contents; /* Make labels and inputs align naturally */
+}
+
+#chat-form input,
+#chat-form select {
+    width: 100%;
+    padding: 8px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
-#settings label {
-    display: block;
-    margin-bottom: 5px;
+#chat-form button {
+    grid-column: 2; /* Align button to the second column */
+    justify-self: start; /* Align the button to the start of the column */
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#chat-form button:hover {
+    background-color: #45a049;
+}
+
+#scrape-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#scrape-button:hover {
+    background-color: #45a049;
 }
