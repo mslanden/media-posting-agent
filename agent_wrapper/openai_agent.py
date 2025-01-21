@@ -1,15 +1,19 @@
 import openai
+import os
 
 class OpenAIAgent:
+    def __init__(self):
+        self.client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
     def run(self, prompt):
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
                 ]
             )
-            return response["choices"][0]["message"]["content"].strip()
+            return response.choices[0].message.content.strip()
         except Exception as e:
             return f"Error: {str(e)}"
