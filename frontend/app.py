@@ -35,10 +35,13 @@ def scrape_url():
         return jsonify({"error": "Failed to save web data"}), 500
 
 @app.route("/generate", methods=["POST"])
+import uuid
+
 def generate_content():
     message = request.form.get("message")
     url = request.form.get("url")
     media_type = request.form.get("mediaType")
+    image = request.files.get("image")
     settings = load_settings()
     api_key = settings.get("api_key")
     llm_model = settings.get("llm_model")
