@@ -32,6 +32,7 @@ def scrape_and_format_url(url):
 def save_markdown_file(content, filename="webdata.md"):
     try:
         with open(filename, "w", encoding="utf-8") as f:
+            f.truncate(0) # Clear the file content
             f.write(content)
         return True
     except Exception as e:
