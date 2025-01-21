@@ -4,7 +4,7 @@ class AgentWrapper:
             from .openai_agent import OpenAIAgent
             self.agent = OpenAIAgent(api_key)
         elif framework == "anthropic":
-            from .anthropic_agent import AnthropicAgent(api_key)
+            from .anthropic_agent import AnthropicAgent
             self.agent = AnthropicAgent(api_key)
         elif framework == "gemini":
             from .gemini_agent import GeminiAgent
