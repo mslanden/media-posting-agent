@@ -8,58 +8,6 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='css/styles.css') }}"
         />
-        <style>
-            header {
-                padding: 10px 0;
-            }
-
-            .dark-mode {
-                background-color: #121212;
-                color: #ffffff;
-            }
-
-            .wide-input {
-                width: 100%;
-            }
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-            #chat-form {
-                display: grid;
-                grid-template-columns: 1fr 2fr;
-                gap: 10px;
-            }
-            #chat-form label {
-                text-align: right;
-                padding-right: 10px;
-            }
-            #chat-form input,
-            #chat-form select {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-            }
-            #chat-form button,
-            #scrape-button {
-                padding: 10px 15px;
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 4px;
-                margin-top: 10px;
-            }
-            #chat-form button:hover,
-            #scrape-button:hover {
-                background-color: #45a049;
-            }
-            #chat-form li {
-                margin-bottom: 0;
-            }
-        </style>
     </head>
     <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
         <header>
@@ -72,8 +20,10 @@
                         Create
                     </h2>
                     <form id="chat-form">
-                        <ul style="list-style-type: none; padding: 0">
-                            <li style="margin-bottom: 10px">
+                        <ul
+                            style="list-style-type: none; padding: 0; margin: 0"
+                        >
+                            <li>
                                 <label for="message">Comments:</label>
                                 <input
                                     type="text"
@@ -83,7 +33,7 @@
                                     required
                                 />
                             </li>
-                            <li style="margin-bottom: 10px">
+                            <li>
                                 <label for="url">Website:</label>
                                 <input
                                     type="url"
@@ -93,7 +43,7 @@
                                     class="wide-input"
                                 />
                             </li>
-                            <li style="margin-bottom: 10px">
+                            <li>
                                 <label for="image">Image:</label>
                                 <input
                                     type="file"
@@ -102,7 +52,7 @@
                                     accept="image/*"
                                 />
                             </li>
-                            <li style="margin-bottom: 10px">
+                            <li>
                                 <label for="mediaType">Output type:</label>
                                 <select
                                     id="mediaType"
@@ -118,12 +68,7 @@
                                 </select>
                             </li>
                         </ul>
-                        <button
-                            type="submit"
-                            
-                        >
-                            Submit
-                        </button>
+                        <button type="submit">Submit</button>
                     </form>
                     <button
                         id="scrape-button"
@@ -160,7 +105,8 @@
                                 if
                                 settings
                                 and
-                                settings.llm_model == "openai"
+                                settings.llm_model=""
+                                ="openai"
                                 %}selected{%
                                 endif
                                 %}
@@ -173,7 +119,8 @@
                                 if
                                 settings
                                 and
-                                settings.llm_model == "gemini"
+                                settings.llm_model=""
+                                ="gemini"
                                 %}selected{%
                                 endif
                                 %}
@@ -186,7 +133,8 @@
                                 if
                                 settings
                                 and
-                                settings.llm_model == "anthropic"
+                                settings.llm_model=""
+                                ="anthropic"
                                 %}selected{%
                                 endif
                                 %}
@@ -195,160 +143,9 @@
                             </option>
                         </select>
                     </div>
-                    <div id="api-key-inputs">
-                        <div
-                            id="openai-api-key-input"
-                            style="display: {% if settings and settings.llm_model == 'openai' %}block{% else %}none{% endif %};"
-                        >
-                            <label for="openai-api-key">OpenAI API Key:</label>
-                            <input
-                                type="text"
-                                id="openai-api-key"
-                                placeholder="Enter OpenAI API Key"
-                                value="{% if settings and settings.llm_model == 'openai' %}{{ settings.api_key }}{% endif %}"
-                            />
-                        </div>
-                        <div
-                            id="gemini-api-key-input"
-                            style="display: {% if settings and settings.llm_model == 'gemini' %}block{% else %}none{% endif %};"
-                        >
-                            <label for="gemini-api-key">Gemini API Key:</label>
-                            <input
-                                type="text"
-                                id="gemini-api-key"
-                                placeholder="Enter Gemini API Key"
-                                value="{% if settings and settings.llm_model == 'gemini' %}{{ settings.api_key }}{% endif %}"
-                            />
-                        </div>
-                        <div
-                            id="anthropic-api-key-input"
-                            style="display: {% if settings and settings.llm_model == 'anthropic' %}block{% else %}none{% endif %};"
-                        >
-                            <label for="anthropic-api-key"
-                                >Anthropic API Key:</label
-                            >
-                            <input
-                                type="text"
-                                id="anthropic-api-key"
-                                placeholder="Enter Anthropic API Key"
-                                value="{% if settings and settings.llm_model == 'anthropic' %}{{ settings.api_key }}{% endif %}"
-                            />
-                        </div>
-                    </div>
-                    <button id="save-settings-button" style="margin-top: 10px">
-                        Save Settings
-                    </button>
                 </div>
             </div>
         </div>
-
         <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
-        <script>
-            document.getElementById('scrape-button').addEventListener('click', function(event) {
-                event.preventDefault();
-                const url = document.getElementById('url').value;
-                fetch('/scrape', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'url=' + encodeURIComponent(url),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert('Error: ' + data.error);
-                    } else {
-                        alert('Success: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while scraping the URL.');
-                });
-            });
-
-            document.getElementById('chat-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(this);
-                const llmModel = document.getElementById('llm-model-select').value;
-                let apiKey = '';
-                if (llmModel === 'openai') {
-                    apiKey = document.getElementById('openai-api-key').value;
-                } else if (llmModel === 'gemini') {
-                    apiKey = document.getElementById('gemini-api-key').value;
-                } else if (llmModel === 'anthropic') {
-                    apiKey = document.getElementById('anthropic-api-key').value;
-                }
-                formData.append('api_key', apiKey);
-                formData.append('llm_model', llmModel);
-                fetch('/generate', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert('Error: ' + data.error);
-                    } else {
-                        alert('Success: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while generating the output.');
-                });
-            });
-
-            document.getElementById('llm-model-select').addEventListener('change', function() {
-                const selectedModel = this.value;
-                document.getElementById('openai-api-key-input').style.display = 'none';
-                document.getElementById('gemini-api-key-input').style.display = 'none';
-                document.getElementById('anthropic-api-key-input').style.display = 'none';
-
-                if (selectedModel === 'openai') {
-                    document.getElementById('openai-api-key-input').style.display = 'block';
-                } else if (selectedModel === 'gemini') {
-                    document.getElementById('gemini-api-key-input').style.display = 'block';
-                } else if (selectedModel === 'anthropic') {
-                    document.getElementById('anthropic-api-key-input').style.display = 'block';
-                }
-            });
-
-            document.getElementById('save-settings-button').addEventListener('click', function(event) {
-                event.preventDefault();
-                const selectedModel = document.getElementById('llm-model-select').value;
-                let apiKey = '';
-                const darkMode = document.getElementById('dark-mode-toggle').checked;
-
-                if (selectedModel === 'openai') {
-                    apiKey = document.getElementById('openai-api-key').value;
-                } else if (selectedModel === 'gemini') {
-                    apiKey = document.getElementById('gemini-api-key').value;
-                } else if (selectedModel === 'anthropic') {
-                    apiKey = document.getElementById('anthropic-api-key').value;
-                }
-
-                fetch('/save_settings', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ api_key: apiKey, llm_model: selectedModel, dark_mode: darkMode }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert('Error: ' + data.error);
-                    } else {
-                        alert('Success: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while saving settings.');
-                });
-            });
-        </script>
     </body>
 </html>
