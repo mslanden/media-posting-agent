@@ -5,9 +5,9 @@
 }
 
 body.dark-mode {
-    --bg-color: #333;
-    --text-color: #fff;
-    --header-bg: #222;
+    --bg-color: #2c2c2c;
+    --text-color: #d4d4d4;
+    --header-bg: #3a3a3a;
 }
 
 body {
@@ -25,6 +25,11 @@ header {
     background-color: var(--header-bg);
     padding: 20px;
     text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode header {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #main {
@@ -43,6 +48,10 @@ header {
     border-left: 1px solid #ccc;
     display: flex;
     flex-direction: column;
+}
+
+body.dark-mode #sidebar {
+    border-left: 1px solid #555;
 }
 
 #settings {
