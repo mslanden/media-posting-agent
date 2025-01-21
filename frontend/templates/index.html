@@ -93,22 +93,33 @@
             <div id="sidebar">
                 <div id="sidebar-tabs">
                     <select id="sidebar-select">
-                        <option value="scheduled-posts">Scheduled Posts</option>
-                        <option value="api-keys">API Keys</option>
                         <option value="settings">Settings</option>
+                        <option value="scheduled-posts">Scheduled Posts</option>
                     </select>
                 </div>
-                <div id="scheduled-posts">
+                <div id="scheduled-posts" style="display: none;">
                     <h2>Scheduled Posts</h2>
                     <select id="scheduled-posts-select">
                         <option value="">Select a post</option>
                     </select>
                 </div>
-                <div id="settings">
+                <div id="settings" >
                     <h2>Settings</h2>
-                    <div>
+                     <div>
                         <label for="dark-mode-toggle">Dark Mode:</label>
                         <input type="checkbox" id="dark-mode-toggle" />
+                    </div>
+                    <div>
+                        <label for="api-key-input">API Key:</label>
+                        <input type="text" id="api-key-input" placeholder="Enter API Key">
+                    </div>
+                     <div>
+                        <label for="llm-model-select">LLM Model:</label>
+                        <select id="llm-model-select">
+                            <option value="openai">OpenAI</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="anthropic">Anthropic</option>
+                        </select>
                     </div>
                 </div>
             </div>
