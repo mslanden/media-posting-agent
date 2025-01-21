@@ -40,15 +40,16 @@ def generate_content():
 
     if not message:
         return jsonify({"error": "No message provided"}), 400
+    if not api_key:
+        return jsonify({"error": "No API key provided"}), 400
+    if not llm_model:
+        return jsonify({"error": "No LLM model provided"}), 400
 
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
-
-    if not api_key:
-        return jsonify({"error": "No API key provided"}), 400
 
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
@@ -70,6 +71,8 @@ def save_settings_route():
         return jsonify({"error": "No API key provided"}), 400
     if not llm_model:
         return jsonify({"error": "No LLM model provided"}), 400
+    if dark_mode is None:
+        return jsonify({"error": "No dark mode provided"}), 400
 
     settings = {
         "api_key": api_key,
