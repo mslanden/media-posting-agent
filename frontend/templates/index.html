@@ -142,6 +142,10 @@
             document.getElementById('chat-form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const formData = new FormData(this);
+                const apiKey = document.getElementById('api-key-input').value;
+                const llmModel = document.getElementById('llm-model-select').value;
+                formData.append('api_key', apiKey);
+                formData.append('llm_model', llmModel);
                 fetch('/generate', {
                     method: 'POST',
                     body: formData,
