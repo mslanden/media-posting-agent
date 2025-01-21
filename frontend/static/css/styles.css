@@ -41,10 +41,19 @@ header {
     flex: 1;
     padding: 20px;
     border-left: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
 }
 
-#scheduled-posts,
-#api-keys,
 #settings {
-    display: none;
+    display: block;
+}
+
+#settings > div {
+    margin-bottom: 10px;
+}
+
+#settings label {
+    display: block;
+    margin-bottom: 5px;
 }
