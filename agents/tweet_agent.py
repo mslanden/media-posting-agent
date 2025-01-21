@@ -19,10 +19,15 @@ class TweetAgent:
         tweet = self.agent_wrapper.run(prompt)
         return tweet
 
-    def save_tweet(self, tweet):
+    def save_tweet(self, tweet, post_date=None, post_time=None):
         try:
-            with open("tweets.txt", "a", encoding="utf-8") as f:
-                f.write(tweet + "\n")
+            post = {
+                "tweet": tweet,
+                "post_date": post_date,
+                "post_time": post_time
+            }
+            from post_history import save_post
+            save_post(post)
             return True
         except Exception as e:
             print(f"Error saving tweet: {e}")

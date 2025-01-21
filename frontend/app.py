@@ -7,6 +7,7 @@ from agents.tweet_agent import TweetAgent
 import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
+from post_history import save_post, load_posts
 
 app = Flask(__name__)
 load_dotenv()
@@ -91,6 +92,11 @@ def save_settings_route():
         return jsonify({"message": f"{llm_model} API key saved successfully"}), 200
     else:
         return jsonify({"error": f"Failed to save settings"}), 500
+
+@app.route("/get_posts", methods=["GET"])
+def get_posts():
+    posts = load_posts()
+    return jsonify(posts), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
