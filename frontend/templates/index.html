@@ -67,17 +67,17 @@
                                 </select>
                             </li>
                         </ul>
+                        <button
+                            type="submit"
+                            style="
+                                margin-top: 10px;
+                                margin-left: auto;
+                                display: block;
+                            "
+                        >
+                            Submit
+                        </button>
                     </form>
-                    <button
-                        type="submit"
-                        style="
-                            margin-top: 10px;
-                            margin-left: auto;
-                            display: block;
-                        "
-                    >
-                        Submit
-                    </button>
                     <button
                         id="scrape-button"
                         style="
@@ -138,6 +138,27 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred while scraping the URL.');
+                });
+            });
+
+            document.getElementById('chat-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('/generate', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        alert('Success: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while generating the output.');
                 });
             });
         </script>
