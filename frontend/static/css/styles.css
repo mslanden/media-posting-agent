@@ -4,7 +4,7 @@
     --header-bg: #f0f0f0;
 }
 
-.dark-mode {
+body.dark-mode {
     --bg-color: #333;
     --text-color: #fff;
     --header-bg: #222;
