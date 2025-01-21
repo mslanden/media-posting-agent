@@ -12,7 +12,8 @@ load_dotenv()
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    settings = load_settings()
+    return render_template("index.html", settings=settings)
 
 @app.route("/scrape", methods=["POST"])
 def scrape_url():
@@ -43,7 +44,7 @@ def generate_content():
     scraped_data = ""
     if url:
         scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
+        if "Error" in scraped_
             return jsonify({"error": scraped_data}), 500
 
     if not api_key:
