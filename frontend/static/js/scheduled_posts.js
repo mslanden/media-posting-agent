@@ -15,14 +15,14 @@ function loadScheduledPostsJS() {
                     listItem.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <p><strong>Content:</strong> ${post.content}</p>
+                                <p><strong>${post.media_type.charAt(0).toUpperCase() + post.media_type.slice(1)}:</strong> ${post.content}</p>
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
                                 ${post.image_path ? `<img src="${post.image_path}" alt="Post Image" style="max-width: 100px; max-height: 100px;">` : ''}
                             </div>
                             </div>
                         </div>
                     `;
-                    listItem.addEventListener('click', () => editPost(post.id, post.content, post.post_date, post.post_time, post.image_path));
+                    listItem.addEventListener('click', () => editPost(post.id, post.content, post.post_date, post.post_time, post.image_path, post.media_type));
                     postList.appendChild(listItem);
                 });
             }
@@ -33,7 +33,7 @@ function loadScheduledPostsJS() {
         });
 }
 
-function editPost(postId, tweet, postDate, postTime, imagePath) {
+function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.innerHTML = `
@@ -47,6 +47,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath) {
             <label for="edit-time">Time:</label>
             <input type="time" id="edit-time" value="${postTime}">
             ${imagePath ? `<img src="${imagePath}" alt="Post Image" style="max-width: 200px; max-height: 200px;">` : ''}
+             <p><strong>Output Type:</strong> ${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)}</p>
             <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
                 <button id="save-edit-button">Save</button>
                 <button id="delete-post-button">Delete</button>

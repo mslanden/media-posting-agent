@@ -92,7 +92,8 @@ def generate_content():
         "content": content,
         "post_date": post_date,
         "post_time": post_time,
-        "image_path": image_path
+        "image_path": image_path,
+        "media_type": media_type
     }
     if save_post(post):
         return jsonify({"message": content}), 200
