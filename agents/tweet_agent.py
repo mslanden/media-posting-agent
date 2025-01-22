@@ -8,13 +8,12 @@ class TweetAgent:
     def generate_tweet(self, scraped_data, user_comments, image_path=None):
         prompt = f"""
         You are an expert tweet writer.
-        Based on the following scraped web page 
-        {scraped_data}
-        And the following user comments:
-        {user_comments}
         """
+        if scraped_
+            prompt += f"Based on the following scraped web page: {scraped_data}\n"
+        prompt += f"And the following user comments: {user_comments}\n"
         if image_path:
-            prompt += f"Also, use the information from this image: {image_path}"
+            prompt += f"Also, use the information from this image: {image_path}\n"
         prompt += "Generate a tweet."
         tweet = self.agent_wrapper.run(prompt)
         return tweet
