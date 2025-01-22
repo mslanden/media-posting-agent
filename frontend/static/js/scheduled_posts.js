@@ -40,8 +40,11 @@ function editPost(postId) {
     const scheduledTime = postItem.querySelector('p:nth-child(2)').textContent.replace('Scheduled: ', '');
     const [scheduledDate, scheduledTimeOnly] = scheduledTime.split(' ');
 
-    const newTweet = promptWithTextarea('Edit tweet:', postText);
+    let newTweet = promptWithTextarea('Edit tweet:', postText);
     if (newTweet === null) return;
+    if (newTweet.trim() === "") {
+        newTweet = postText;
+    }
     const newDate = prompt('Edit date:', scheduledDate);
     if (newDate === null) return;
     const newTime = prompt('Edit time:', scheduledTimeOnly);
