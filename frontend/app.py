@@ -60,10 +60,18 @@ def generate_content():
         if "Error" in scraped_data:
             return jsonify({"error": scraped_data}), 500
 
+    post_date = request.form.get("postDate")
+    post_time = request.form.get("postTime")
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
         tweet = tweet_agent.generate_tweet(scraped_data, message)
-        if tweet_agent.save_tweet(tweet):
+        post = {
+            "id": str(uuid.uuid4()),
+            "tweet": tweet,
+            "post_date": post_date,
+            "post_time": post_time
+        }
+        if save_post(post):
             return jsonify({"message": tweet}), 200
         else:
             return jsonify({"error": "Failed to save tweet"}), 500
@@ -97,6 +105,31 @@ def save_settings_route():
 def get_posts():
     posts = load_posts()
     return jsonify(posts), 200
+
+@app.route("/update_post", methods=["POST"])
+def update_post_route():
+    data = request.get_json()
+    post_id = data.get("id")
+    updated_post = data.get("updated_post")
+    if not post_id:
+        return jsonify({"error": "No post ID provided"}), 400
+    if not updated_post:
+        return jsonify({"error": "No updated post data provided"}), 400
+    if update_post(post_id, updated_post):
+        return jsonify({"message": "Post updated successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to update post"}), 500
+
+@app.route("/delete_post", methods=["POST"])
+def delete_post_route():
+    data = request.get_json()
+    post_id = data.get("id")
+    if not post_id:
+        return jsonify({"error": "No post ID provided"}), 400
+    if delete_post(post_id):
+        return jsonify({"message": "Post deleted successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to delete post"}), 500
 
 @app.route("/settings", methods=["GET"])
 def settings():
