@@ -157,8 +157,8 @@
                 </div>
             </div>
             <div id="sidebar" style="display: none; position: absolute; top: 0; right: 0; height: 100%; width: 300px; background-color: var(--bg-color); border-left: 1px solid #ccc; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.2);">
-                <div id="scheduled-posts" style="display: none;">
-                    <h2>Scheduled Posts</h2>
+                <div id="scheduled-posts" class="card" style="display: none;">
+                    <h2 style="text-align: center; margin-bottom: 20px">Scheduled Posts</h2>
                     <ul id="post-list">
                     </ul>
                 </div>
@@ -253,6 +253,7 @@
         </div>
 
         <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/scheduled_posts.js') }}"></script>
         <script>
             document.getElementById('settings-button').addEventListener('click', function() {
                 window.location.href = '/settings';
@@ -322,6 +323,7 @@
                             );
                         });
                 });
+            loadScheduledPostsJS();
 
             document
                 .getElementById("llm-model-select")
