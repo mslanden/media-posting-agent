@@ -7,7 +7,7 @@ from agents.tweet_agent import TweetAgent
 import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
-from post_history import save_post, load_posts
+from post_history import save_post, load_posts, update_post, delete_post
 
 app = Flask(__name__)
 load_dotenv()
