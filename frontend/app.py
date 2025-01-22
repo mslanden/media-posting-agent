@@ -73,20 +73,30 @@ def generate_content():
 
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
-        tweet = tweet_agent.generate_tweet(scraped_data, message, image_path)
-        post = {
-            "id": str(uuid.uuid4()),
-            "tweet": tweet,
-            "post_date": post_date,
-            "post_time": post_time,
-            "image_path": image_path
-        }
-        if save_post(post):
-            return jsonify({"message": tweet}), 200
-        else:
-            return jsonify({"error": "Failed to save tweet"}), 500
+        content = tweet_agent.generate_tweet(scraped_data, message, image_path)
+    elif media_type == "linkedin":
+        linkedin_agent = LinkedInAgent(framework=llm_model, api_key=api_key)
+        content = linkedin_agent.generate_linkedin_post(scraped_data, message, image_path)
+    elif media_type == "article":
+        article_agent = ArticleAgent(framework=llm_model, api_key=api_key)
+        content = article_agent.generate_article(scraped_data, message, image_path)
+    elif media_type == "newsletter":
+        newsletter_agent = NewsletterAgent(framework=llm_model, api_key=api_key)
+        content = newsletter_agent.generate_newsletter(scraped_data, message, image_path)
     else:
         return jsonify({"error": "Unsupported media type"}), 400
+    
+    post = {
+        "id": str(uuid.uuid4()),
+        "content": content,
+        "post_date": post_date,
+        "post_time": post_time,
+        "image_path": image_path
+    }
+    if save_post(post):
+        return jsonify({"message": content}), 200
+    else:
+        return jsonify({"error": "Failed to save post"}), 500
 
 @app.route("/save_settings", methods=["POST"])
 def save_settings_route():
