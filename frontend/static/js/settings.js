@@ -1,4 +1,4 @@
-function loadSettingsJS() {
+document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("settings-form").addEventListener("submit", function (event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -38,4 +38,4 @@ function loadSettingsJS() {
                 alert("An error occurred while saving settings.");
             });
     });
-}
+});
