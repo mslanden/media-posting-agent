@@ -66,6 +66,12 @@ def delete_post(post_id):
         bool: True if the post was deleted successfully, False otherwise.
     """
     posts = load_posts()
+    post_to_delete = next((post for post in posts if str(post.get("id")) == str(post_id)), None)
+    if post_to_delete and post_to_delete.get("image_path"):
+        try:
+            os.remove(os.path.join("frontend", post_to_delete["image_path"]))
+        except Exception as e:
+            print(f"Error deleting image: {e}")
     posts = [post for post in posts if str(post.get("id")) != str(post_id)]  # Exclude the post to delete
     try:
         with open(POST_HISTORY_FILE, "w") as f:
