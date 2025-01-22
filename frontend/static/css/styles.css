@@ -1,7 +1,7 @@
 :root {
     --bg-color: #f9f9f9; /* Softer light mode background */
     --text-color: #333;
-    --header-bg: #f0f0f0;
+    --header-bg: #f0f0f0; /* Light gray header background */
 }
 
 body.dark-mode {
@@ -25,7 +25,7 @@ header {
     background-color: var(--header-bg);
     padding: 20px;
     text-align: left;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for header */
 }
 
 body.dark-mode header {
@@ -45,13 +45,13 @@ body.dark-mode header {
 #sidebar {
     flex: 1;
     padding: 20px;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ccc; /* Light gray border for sidebar */
     display: flex;
     flex-direction: column;
 }
 
 body.dark-mode #sidebar {
-    border-left: 1px solid #555;
+    border-left: 1px solid #555; /* Darker border for dark mode sidebar */
 }
 
 header button {
@@ -61,7 +61,7 @@ header button {
     border: none;
     cursor: pointer;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 14px; /* Smaller font size for header buttons */
 }
 
 header button:hover {
@@ -72,7 +72,7 @@ header button:hover {
     display: grid;
     grid-template-columns: 1fr 2fr; /* Two columns: labels and inputs */
     gap: 10px;
-    align-items: center; /* Center items vertically */
+    align-items: center; /* Center items vertically in form */
 }
 
 #chat-form li {
@@ -84,7 +84,7 @@ header button:hover {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
 #chat-form button {
@@ -94,7 +94,7 @@ header button:hover {
     border: none;
     cursor: pointer;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 14px; /* Smaller font size for form buttons */
 }
 
 #chat-form button:hover {

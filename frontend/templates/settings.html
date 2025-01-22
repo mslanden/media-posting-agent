@@ -46,24 +46,20 @@
     <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
         <header>
             <h1 style="padding-left: 20px">Settings</h1>
+            <div style="position: absolute; top: 10px; right: 20px;">
+                <button id="back-button" style="margin-right: 10px;">Back to App</button>
+            </div>
         </header>
         <div class="container">
             <div id="settings-box">
                 <div id="settings-error" style="color: red;"></div>
-                <form id="settings-form">
+                <form id="settings-form" style="margin-bottom: 20px;">
                     <div>
                         <label for="dark-mode-toggle">Dark Mode:</label>
                         <input
                             type="checkbox"
                             id="dark-mode-toggle"
-                            {%
-                            if
-                            settings
-                            and
-                            settings.dark_mode
-                            %}checked{%
-                            endif
-                            %}
+                            {% if settings and settings.dark_mode %}checked{% endif %}
                         />
                     </div>
                     <div>
@@ -135,5 +131,10 @@
         </div>
         <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
         <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+        <script>
+            document.getElementById('back-button').addEventListener('click', function() {
+                window.location.href = '/';
+            });
+        </script>
     </body>
 </html>
