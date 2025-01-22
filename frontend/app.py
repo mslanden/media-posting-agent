@@ -74,7 +74,8 @@ def generate_content():
             "id": str(uuid.uuid4()),
             "tweet": tweet,
             "post_date": post_date,
-            "post_time": post_time
+            "post_time": post_time,
+            "image_path": image_path
         }
         if save_post(post):
             if image_path:

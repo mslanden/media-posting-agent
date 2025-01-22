@@ -19,10 +19,18 @@ def save_post(post):
     except Exception as e:
         print(f"Error saving post: {e}")
         return False
+    except Exception as e:
+        print(f"Error saving post: {e}")
+        return False
 
 def update_post(post_id, updated_post):
     """
     Update a post in the post history JSON file.
+
+    Args:
+        post_id (str): The ID of the post to update.
+        updated_post (dict): The updated post data.
+    """
 
     Args:
         post_id (str): The ID of the post to update.

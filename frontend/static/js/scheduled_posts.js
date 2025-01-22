@@ -17,11 +17,12 @@ function loadScheduledPostsJS() {
                             <div>
                                 <p><strong>Tweet:</strong> ${post.tweet}</p>
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
+                                ${post.image_path ? `<p><strong>Image:</strong> ${post.image_path}</p>` : ''}
                             </div>
                             </div>
                         </div>
                     `;
-                    listItem.addEventListener('click', () => editPost(post.id, post.tweet, post.post_date, post.post_time));
+                    listItem.addEventListener('click', () => editPost(post.id, post.tweet, post.post_date, post.post_time, post.image_path));
                     postList.appendChild(listItem);
                 });
             }
@@ -45,6 +46,7 @@ function editPost(postId, tweet, postDate, postTime) {
             <input type="date" id="edit-date" value="${postDate}">
             <label for="edit-time">Time:</label>
             <input type="time" id="edit-time" value="${postTime}">
+            ${imagePath ? `<p><strong>Image:</strong> ${imagePath}</p>` : ''}
             <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
                 <button id="save-edit-button">Save</button>
                 <button id="delete-post-button">Delete</button>
