@@ -9,7 +9,7 @@ class TweetAgent:
         prompt = f"""
         You are an expert tweet writer.
         """
-        if scraped_
+        if scraped_data and len(scraped_data) > 0:
             prompt += f"Based on the following scraped web page: {scraped_data}\n"
         prompt += f"And the following user comments: {user_comments}\n"
         if image_path:
