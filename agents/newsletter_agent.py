@@ -5,13 +5,14 @@ class NewsletterAgent:
     def __init__(self, framework="openai", api_key=None):
         self.agent_wrapper = AgentWrapper(framework, api_key)
 
-    def generate_newsletter(self, scraped_data, user_comments, image_path=None):
+    def generate_newsletter(self, scraped_data, user_comments="", image_path=None):
         prompt = f"""
         You are an expert newsletter writer.
         """
         if scraped_data and len(scraped_data) > 0:
             prompt += f"Based on the following scraped web page: {scraped_data}\n"
-        prompt += f"And the following user comments: {user_comments}\n"
+        if user_comments:
+            prompt += f"And the following user comments: {user_comments}\n"
         if image_path:
             prompt += f"Also, use the information from this image: {image_path}\n"
         prompt += "Generate a newsletter."
