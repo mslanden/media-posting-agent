@@ -24,9 +24,6 @@ def save_post(post):
 
 def update_post(post_id, updated_post):
     """
-    Update a post in the post history JSON file.
-
-    """
     posts = load_posts()
     for i, post in enumerate(posts):
         if str(post.get("id")) == post_id:
