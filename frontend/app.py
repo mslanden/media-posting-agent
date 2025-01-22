@@ -62,9 +62,14 @@ def generate_content():
 
     post_date = request.form.get("postDate")
     post_time = request.form.get("postTime")
+    image_path = None
+    if image:
+        image_path = f"temp_image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
+        image.save(image_path)
+
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
-        tweet = tweet_agent.generate_tweet(scraped_data, message)
+        tweet = tweet_agent.generate_tweet(scraped_data, message, image_path)
         post = {
             "id": str(uuid.uuid4()),
             "tweet": tweet,
@@ -72,10 +77,16 @@ def generate_content():
             "post_time": post_time
         }
         if save_post(post):
+            if image_path:
+                os.remove(image_path)
             return jsonify({"message": tweet}), 200
         else:
+            if image_path:
+                os.remove(image_path)
             return jsonify({"error": "Failed to save tweet"}), 500
     else:
+        if image_path:
+            os.remove(image_path)
         return jsonify({"error": "Unsupported media type"}), 400
 
 @app.route("/save_settings", methods=["POST"])

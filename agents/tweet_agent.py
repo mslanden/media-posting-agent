@@ -15,7 +15,7 @@ class TweetAgent:
         if image_path:
             prompt += f"Also, use the information from this image: {image_path}\n"
         prompt += "Generate a tweet."
-        tweet = self.agent_wrapper.run(prompt)
+        tweet = self.agent_wrapper.run(prompt, image_path)
         return tweet
 
     def save_tweet(self, tweet, post_date=None, post_time=None):
