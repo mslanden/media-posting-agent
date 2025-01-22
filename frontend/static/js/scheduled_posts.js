@@ -80,6 +80,7 @@ function editPost(postId) {
             if (scheduledElement) {
                 scheduledElement.innerHTML = `<strong>Scheduled:</strong> ${newDate} ${newTime}`;
             }
+            loadScheduledPostsJS();
         }
     })
     .catch(error => {
