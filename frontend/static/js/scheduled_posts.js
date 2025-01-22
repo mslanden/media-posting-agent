@@ -36,9 +36,11 @@ function loadScheduledPostsJS() {
 
 function editPost(postId) {
     const postItem = document.querySelector(`[data-post-id="${postId}"]`);
-    const postText = postItem.querySelector('p:first-child').textContent.replace('Tweet: ', '');
-    const scheduledTime = postItem.querySelector('p:nth-child(2)').textContent.replace('Scheduled: ', '');
-    const [scheduledDate, scheduledTimeOnly] = scheduledTime.split(' ');
+    const tweetElement = postItem.querySelector('p:first-child');
+    const scheduledElement = postItem.querySelector('p:nth-child(2)');
+    const postText = tweetElement ? tweetElement.textContent.replace('Tweet: ', '') : '';
+    const scheduledTime = scheduledElement ? scheduledElement.textContent.replace('Scheduled: ', '') : '';
+    const [scheduledDate, scheduledTimeOnly] = scheduledTime.trim().split(' ');
 
     let newTweet = promptWithTextarea('Edit tweet:', postText);
     if (newTweet === null) return;

@@ -30,7 +30,7 @@ def update_post(post_id, updated_post):
     """
     posts = load_posts()
     for i, post in enumerate(posts):
-        if post.get("id") == post_id:
+        if str(post.get("id")) == post_id:
             for key, value in updated_post.items():
                 post[key] = value
             break
