@@ -32,9 +32,6 @@ def update_post(post_id, updated_post):
         updated_post (dict): The updated post data.
     """
 
-    Args:
-        post_id (str): The ID of the post to update.
-        updated_post (dict): The updated post data.
     """
     posts = load_posts()
     for i, post in enumerate(posts):
