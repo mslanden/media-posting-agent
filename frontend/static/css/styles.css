@@ -126,6 +126,26 @@ header button:hover {
     font-size: 14px;
 }
 
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+body.dark-mode .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 #scrape-button:hover {
     background-color: #45a049;
+}
+
+:root {
+    --card-bg: #fff;
+}
+
+body.dark-mode {
+    --card-bg: #333;
 }
