@@ -249,6 +249,9 @@
 
         <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
         <script>
+            document.getElementById('settings-button').addEventListener('click', function() {
+                window.location.href = '/settings';
+            });
             document
                 .getElementById("scrape-button")
                 .addEventListener("click", function (event) {
