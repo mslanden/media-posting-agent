@@ -33,7 +33,7 @@ function loadScheduledPostsJS() {
         });
 }
 
-function editPost(postId, tweet, postDate, postTime) {
+function editPost(postId, tweet, postDate, postTime, imagePath) {
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.innerHTML = `
