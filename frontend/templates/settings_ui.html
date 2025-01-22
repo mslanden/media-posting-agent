@@ -8,9 +8,9 @@
     <div>
         <label for="llm-model-select">LLM Model:</label>
         <select id="llm-model-select">
-            <option value="openai" {% if settings and settings.llm_model == "openai" %} selected {% endif %}>OpenAI</option>
-            <option value="gemini" {% if settings and settings.llm_model == "gemini" %} selected {% endif %}>Gemini</option>
-            <option value="anthropic" {% if settings and settings.llm_model == "anthropic" %} selected {% endif %}>Anthropic</option>
+            <option value="openai" {% if settings and settings.llm_model == "openai" %}selected{% endif %}>OpenAI</option>
+            <option value="gemini" {% if settings and settings.llm_model == "gemini" %}selected{% endif %}>Gemini</option>
+            <option value="anthropic" {% if settings and settings.llm_model == "anthropic" %}selected{% endif %}>Anthropic</option>
         </select>
     </div>
     <div id="api-key-inputs">
