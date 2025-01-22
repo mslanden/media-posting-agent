@@ -34,13 +34,9 @@ def update_post(post_id, updated_post):
             for key, value in updated_post.items():
                 post[key] = value
             break
-    try:
-        with open(POST_HISTORY_FILE, "w") as f:
-            json.dump(posts, f, indent=4)
-        return True
-    except Exception as e:
-        print(f"Error updating post: {e}")
-        return False
+    with open(POST_HISTORY_FILE, "w") as f:
+        json.dump(posts, f, indent=4)
+    return True
 
 def delete_post(post_id):
     """
