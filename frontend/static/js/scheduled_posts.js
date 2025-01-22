@@ -11,7 +11,18 @@ function loadScheduledPostsJS() {
             } else {
                 posts.forEach((post) => {
                     const listItem = document.createElement("li");
-                    listItem.textContent = `Tweet: ${post.tweet} Date: ${post.post_date} Time: ${post.post_time}`;
+                    listItem.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <p><strong>Tweet:</strong> ${post.tweet}</p>
+                                <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
+                            </div>
+                            <div>
+                                <button style="margin-right: 5px;" onclick="editPost('${post.id}')">Edit</button>
+                                <button onclick="deletePost('${post.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
                     postList.appendChild(listItem);
                 });
             }
@@ -20,4 +31,14 @@ function loadScheduledPostsJS() {
             console.error("Error:", error);
             alert("An error occurred while loading scheduled posts.");
         });
+}
+
+function editPost(postId) {
+    console.log('Edit post:', postId);
+    alert('Edit functionality is not implemented yet.');
+}
+
+function deletePost(postId) {
+    console.log('Delete post:', postId);
+    alert('Delete functionality is not implemented yet.');
 }
