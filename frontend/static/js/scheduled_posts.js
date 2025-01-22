@@ -69,8 +69,10 @@ function editPost(postId) {
         if (data.error) {
             alert('Error updating post: ' + data.error);
         } else {
+            const postItem = document.querySelector(`[data-post-id="${postId}"]`);
+            postItem.querySelector('p:first-child').innerHTML = `<strong>Tweet:</strong> ${newTweet}`;
+            postItem.querySelector('p:nth-child(2)').innerHTML = `<strong>Scheduled:</strong> ${newDate} ${newTime}`;
             alert('Post updated successfully');
-            loadScheduledPostsJS();
         }
     })
     .catch(error => {
