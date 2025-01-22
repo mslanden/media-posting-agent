@@ -44,6 +44,17 @@ function showTab(tabId) {
 
     if (tabId === "scheduled-posts") {
         fetchPosts();
+    } else if (tabId === "settings") {
+        fetch("/settings_ui")
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("settings").innerHTML = html;
+                loadSettingsJS();
+            })
+            .catch(error => {
+                console.error("Error loading settings:", error);
+                alert("Failed to load settings.");
+            });
     }
 }
 
