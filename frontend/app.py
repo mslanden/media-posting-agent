@@ -98,10 +98,10 @@ def get_posts():
     posts = load_posts()
     return jsonify(posts), 200
 
-@app.route("/settings_ui", methods=["GET"])
-def settings_ui():
+@app.route("/settings", methods=["GET"])
+def settings():
     settings = load_settings()
-    return render_template("settings_ui.html", settings=settings)
+    return render_template("settings.html", settings=settings)
 
 if __name__ == "__main__":
     app.run(debug=True)
