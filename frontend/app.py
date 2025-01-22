@@ -64,7 +64,7 @@ def generate_content():
     post_time = request.form.get("postTime")
     image_path = None
     if image:
-        image_path = f"temp_image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
+        image_path = os.path.abspath(f"temp_image_{uuid.uuid4()}.{image.filename.split('.')[-1]}")
         image.save(image_path)
 
     if media_type == "tweet":
