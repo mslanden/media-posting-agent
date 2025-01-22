@@ -31,7 +31,8 @@ def update_post(post_id, updated_post):
     posts = load_posts()
     for i, post in enumerate(posts):
         if post.get("id") == post_id:
-            posts[i] = updated_post
+            for key, value in updated_post.items():
+                post[key] = value
             break
     try:
         with open(POST_HISTORY_FILE, "w") as f:
