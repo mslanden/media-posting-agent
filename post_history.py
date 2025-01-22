@@ -9,7 +9,6 @@ def save_post(post):
 
     Args:
         post (dict): The post to save.
-    """
     posts = load_posts()
     posts.append(post)
     try:
