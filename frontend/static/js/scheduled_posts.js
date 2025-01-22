@@ -11,6 +11,7 @@ function loadScheduledPostsJS() {
             } else {
                 posts.forEach((post) => {
                     const listItem = document.createElement("li");
+                    listItem.setAttribute('data-post-id', post.id);
                     listItem.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
