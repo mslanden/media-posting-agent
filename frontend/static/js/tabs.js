@@ -35,8 +35,12 @@ function showTab(tabId) {
     sidebar.dataset.currentTab = tabId;
 
     allTabs.forEach(id => {
-        document.getElementById(id).style.display = id === tabId ? "block" : "none";
+        const tabContent = document.getElementById(id);
+        if (tabContent) {
+            tabContent.style.display = id === tabId ? "block" : "none";
+        }
     });
+
 
     if (tabId === "scheduled-posts") {
         fetchPosts();
