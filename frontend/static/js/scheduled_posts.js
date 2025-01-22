@@ -50,13 +50,6 @@ function editPost(postId) {
     const newTime = prompt('Edit time:', scheduledTimeOnly);
     if (newTime === null) return;
 
-    const updatedPost = {
-        id: postId,
-        tweet: newTweet,
-        post_date: newDate,
-        post_time: newTime
-    };
-
     fetch('/update_post', {
         method: 'POST',
         headers: {
@@ -64,7 +57,11 @@ function editPost(postId) {
         },
         body: JSON.stringify({
             id: postId,
-            updated_post: updatedPost,
+            updated_post: {
+                tweet: newTweet,
+                post_date: newDate,
+                post_time: newTime
+            }
         }),
     })
     .then(response => response.json())
