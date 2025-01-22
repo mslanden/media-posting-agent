@@ -18,8 +18,6 @@ function loadScheduledPostsJS() {
                                 <p><strong>Tweet:</strong> ${post.tweet}</p>
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
                             </div>
-                            <div>
-                                <button onclick="deletePost('${post.id}')">Delete</button>
                             </div>
                         </div>
                     `;
@@ -49,6 +47,7 @@ function editPost(postId, tweet, postDate, postTime) {
             <input type="time" id="edit-time" value="${postTime}">
             <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
                 <button id="save-edit-button">Save</button>
+                <button id="delete-post-button">Delete</button>
                 <button id="cancel-edit-button">Cancel</button>
             </div>
         </div>
@@ -99,6 +98,33 @@ function editPost(postId, tweet, postDate, postTime) {
     cancelButton.onclick = () => {
         document.body.removeChild(modal);
     };
+
+    const deleteButton = modal.querySelector('#delete-post-button');
+    deleteButton.onclick = () => {
+        if (confirm('Are you sure you want to delete this post?')) {
+            fetch('/delete_post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: postId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error deleting post: ' + data.error);
+                } else {
+                    alert('Post deleted successfully');
+                    loadScheduledPostsJS();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the post.');
+            });
+            document.body.removeChild(modal);
+        }
+    };
 }
 
 function promptWithTextarea(message, defaultValue) {
@@ -145,29 +171,4 @@ function promptWithTextarea(message, defaultValue) {
             resolve(null);
         };
     });
-}
-
-function deletePost(postId) {
-    if (confirm('Are you sure you want to delete this post?')) {
-        fetch('/delete_post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: postId }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert('Error deleting post: ' + data.error);
-            } else {
-                alert('Post deleted successfully');
-                loadScheduledPostsJS();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while deleting the post.');
-        });
-    }
 }
