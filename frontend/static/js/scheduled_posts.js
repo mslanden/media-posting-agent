@@ -15,14 +15,14 @@ function loadScheduledPostsJS() {
                     listItem.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <p><strong>Tweet:</strong> ${post.tweet}</p>
+                                <p><strong>Content:</strong> ${post.content}</p>
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
                                 ${post.image_path ? `<img src="${post.image_path}" alt="Post Image" style="max-width: 100px; max-height: 100px;">` : ''}
                             </div>
                             </div>
                         </div>
                     `;
-                    listItem.addEventListener('click', () => editPost(post.id, post.tweet, post.post_date, post.post_time, post.image_path));
+                    listItem.addEventListener('click', () => editPost(post.id, post.content, post.post_date, post.post_time, post.image_path));
                     postList.appendChild(listItem);
                 });
             }
@@ -40,8 +40,8 @@ function editPost(postId, tweet, postDate, postTime, imagePath) {
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>Edit Post</h2>
-            <label for="edit-tweet">Tweet:</label>
-            <textarea id="edit-tweet" style="width: 100%; height: 100px;">${tweet}</textarea>
+            <label for="edit-content">Content:</label>
+            <textarea id="edit-content" style="width: 100%; height: 100px;">${tweet}</textarea>
             <label for="edit-date">Date:</label>
             <input type="date" id="edit-date" value="${postDate}">
             <label for="edit-time">Time:</label>
@@ -63,7 +63,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath) {
 
     const saveButton = modal.querySelector('#save-edit-button');
     saveButton.onclick = () => {
-        const newTweet = document.getElementById('edit-tweet').value;
+        const newContent = document.getElementById('edit-content').value;
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
 
@@ -75,7 +75,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath) {
             body: JSON.stringify({
                 id: postId,
                 updated_post: {
-                    tweet: newTweet,
+                    content: newContent,
                     post_date: newDate,
                     post_time: newTime
                 }
