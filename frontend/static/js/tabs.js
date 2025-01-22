@@ -21,10 +21,13 @@ function fetchPosts() {
 function showTab(tabId) {
     const sidebar = document.getElementById("sidebar");
     const allTabs = ["scheduled-posts", "api-keys", "settings"];
-    
+
     if (sidebar.style.display === "block" && sidebar.dataset.currentTab === tabId) {
         sidebar.style.display = "none";
         sidebar.dataset.currentTab = "";
+        allTabs.forEach(id => {
+            document.getElementById(id).style.display = "none";
+        });
         return;
     }
 
