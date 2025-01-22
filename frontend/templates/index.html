@@ -75,6 +75,11 @@
                 <button id="scheduled-posts-button">Scheduled Posts</button>
             </div>
         </header>
+        <script>
+            document.getElementById('scheduled-posts-button').addEventListener('click', function() {
+                window.location.href = '/scheduled_posts';
+            });
+        </script>
         <div id="main">
             <div id="chat-container">
                 <div id="chat-box" class="container card">

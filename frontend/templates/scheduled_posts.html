@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Scheduled Posts</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/styles.css') }}"
+        />
+    </head>
+    <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
+        <header>
+            <h1 style="padding-left: 20px">Scheduled Posts</h1>
+            <div>
+                <button id="back-to-app-button">Back to App</button>
+            </div>
+        </header>
+        <div class="container">
+            <div id="scheduled-posts-box" class="card">
+                <h2>Scheduled Posts</h2>
+                <ul id="post-list">
+                </ul>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='js/scheduled_posts.js') }}"></script>
+        <script>
+            document.getElementById('back-to-app-button').addEventListener('click', function() {
+                window.location.href = '/';
+            });
+            loadScheduledPostsJS();
+        </script>
+    </body>
+</html>

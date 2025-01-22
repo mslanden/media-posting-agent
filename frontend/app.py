@@ -103,5 +103,10 @@ def settings():
     settings = load_settings()
     return render_template("settings.html", settings=settings)
 
+@app.route("/scheduled_posts", methods=["GET"])
+def scheduled_posts():
+    settings = load_settings()
+    return render_template("scheduled_posts.html", settings=settings)
+
 if __name__ == "__main__":
     app.run(debug=True)
