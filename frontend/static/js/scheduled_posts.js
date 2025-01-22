@@ -19,11 +19,11 @@ function loadScheduledPostsJS() {
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
                             </div>
                             <div>
-                                <button style="margin-right: 5px;" onclick="editPost('${post.id}')">Edit</button>
                                 <button onclick="deletePost('${post.id}')">Delete</button>
                             </div>
                         </div>
                     `;
+                    listItem.addEventListener('click', () => editPost(post.id, post.tweet, post.post_date, post.post_time));
                     postList.appendChild(listItem);
                 });
             }
@@ -34,59 +34,71 @@ function loadScheduledPostsJS() {
         });
 }
 
-function editPost(postId) {
-    const postItem = document.querySelector(`[data-post-id="${postId}"]`);
-    const tweetElement = postItem.querySelector('p:first-child');
-    const scheduledElement = postItem.querySelector('p:nth-child(2)');
-    const postText = tweetElement ? tweetElement.textContent.replace('Tweet: ', '') : '';
-    const scheduledTime = scheduledElement ? scheduledElement.textContent.replace('Scheduled: ', '') : '';
-    const [scheduledDate, scheduledTimeOnly] = scheduledTime.trim().split(' ');
+function editPost(postId, tweet, postDate, postTime) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Post</h2>
+            <label for="edit-tweet">Tweet:</label>
+            <textarea id="edit-tweet" style="width: 100%; height: 100px;">${tweet}</textarea>
+            <label for="edit-date">Date:</label>
+            <input type="date" id="edit-date" value="${postDate}">
+            <label for="edit-time">Time:</label>
+            <input type="time" id="edit-time" value="${postTime}">
+            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                <button id="save-edit-button">Save</button>
+                <button id="cancel-edit-button">Cancel</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
 
-    let newTweet = promptWithTextarea('Edit tweet:', postText);
-    if (newTweet === null) return;
-    if (newTweet.trim() === "") {
-        newTweet = postText;
-    }
-    const newDate = prompt('Edit date:', scheduledDate);
-    if (newDate === null) return;
-    const newTime = prompt('Edit time:', scheduledTimeOnly);
-    if (newTime === null) return;
+    const closeButton = modal.querySelector('.close-button');
+    closeButton.onclick = () => {
+        document.body.removeChild(modal);
+    };
 
-    fetch('/update_post', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            id: postId,
-            updated_post: {
-                tweet: newTweet,
-                post_date: newDate,
-                post_time: newTime
+    const saveButton = modal.querySelector('#save-edit-button');
+    saveButton.onclick = () => {
+        const newTweet = document.getElementById('edit-tweet').value;
+        const newDate = document.getElementById('edit-date').value;
+        const newTime = document.getElementById('edit-time').value;
+
+        fetch('/update_post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: postId,
+                updated_post: {
+                    tweet: newTweet,
+                    post_date: newDate,
+                    post_time: newTime
+                }
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Error updating post: ' + data.error);
+            } else {
+                loadScheduledPostsJS();
             }
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert('Error updating post: ' + data.error);
-        } else {
-            const postItem = document.querySelector(`[data-post-id="${postId}"]`);
-            const tweetElement = postItem.querySelector('p:first-child');
-            const scheduledElement = postItem.querySelector('p:nth-child(2)');
-            if (tweetElement) {
-                tweetElement.innerHTML = `<strong>Tweet:</strong> ${newTweet}`;
-            }
-            if (scheduledElement) {
-                scheduledElement.innerHTML = `<strong>Scheduled:</strong> ${newDate} ${newTime}`;
-            }
-            loadScheduledPostsJS();
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while updating the post.');
-    });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the post.');
+        });
+        document.body.removeChild(modal);
+    };
+
+    const cancelButton = modal.querySelector('#cancel-edit-button');
+    cancelButton.onclick = () => {
+        document.body.removeChild(modal);
+    };
 }
 
 function promptWithTextarea(message, defaultValue) {
