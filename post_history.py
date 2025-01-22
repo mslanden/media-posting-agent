@@ -65,7 +65,6 @@ def load_posts():
 
     Returns:
         list: The loaded posts.
-    """
     if os.path.exists(POST_HISTORY_FILE):
         try:
             with open(POST_HISTORY_FILE, "r") as f:
