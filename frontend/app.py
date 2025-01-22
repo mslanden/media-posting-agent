@@ -50,8 +50,6 @@ def generate_content():
     api_key = settings.get("api_key")
     llm_model = settings.get("llm_model")
 
-    if not message:
-        return jsonify({"error": "No message provided"}), 400
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
     if not llm_model:
