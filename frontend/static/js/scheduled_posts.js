@@ -70,8 +70,14 @@ function editPost(postId) {
             alert('Error updating post: ' + data.error);
         } else {
             const postItem = document.querySelector(`[data-post-id="${postId}"]`);
-            postItem.querySelector('p:first-child').innerHTML = `<strong>Tweet:</strong> ${newTweet}`;
-            postItem.querySelector('p:nth-child(2)').innerHTML = `<strong>Scheduled:</strong> ${newDate} ${newTime}`;
+            const tweetElement = postItem.querySelector('p:first-child');
+            const scheduledElement = postItem.querySelector('p:nth-child(2)');
+            if (tweetElement) {
+                tweetElement.innerHTML = `<strong>Tweet:</strong> ${newTweet}`;
+            }
+            if (scheduledElement) {
+                scheduledElement.innerHTML = `<strong>Scheduled:</strong> ${newDate} ${newTime}`;
+            }
         }
     })
     .catch(error => {
