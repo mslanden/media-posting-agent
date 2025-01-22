@@ -16,7 +16,10 @@ class AnthropicAgent:
                     "max_tokens": 100,
                 },
             )
-            response.raise_for_status()
+            if response.status_code != 200:
+                print(f"Anthropic API Error: {response.status_code}")
+                print(f"Response content: {response.text}")
+                return f"Error: Anthropic API returned status code {response.status_code}"
             return response.json().get("completion", "No response")
         except Exception as e:
             return f"Error: {str(e)}"
