@@ -4,6 +4,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, jsonify
 from utils import scrape_and_format_url, save_markdown_file
 from agents.tweet_agent import TweetAgent
+from agents.linkedin_agent import LinkedInAgent
+from agents.article_agent import ArticleAgent
+from agents.newsletter_agent import NewsletterAgent
 import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
