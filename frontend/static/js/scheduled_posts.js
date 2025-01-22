@@ -40,7 +40,7 @@ function editPost(postId) {
     const scheduledTime = postItem.querySelector('p:nth-child(2)').textContent.replace('Scheduled: ', '');
     const [scheduledDate, scheduledTimeOnly] = scheduledTime.split(' ');
 
-    const newTweet = prompt('Edit tweet:', postText);
+    const newTweet = promptWithTextarea('Edit tweet:', postText);
     if (newTweet === null) return;
     const newDate = prompt('Edit date:', scheduledDate);
     if (newDate === null) return;
@@ -76,6 +76,52 @@ function editPost(postId) {
     .catch(error => {
         console.error('Error:', error);
         alert('An error occurred while updating the post.');
+    });
+}
+
+function promptWithTextarea(message, defaultValue) {
+    const textarea = document.createElement('textarea');
+    textarea.value = defaultValue;
+    textarea.style.width = '500px';
+    textarea.style.height = '200px';
+    textarea.style.display = 'block';
+    textarea.style.margin = '10px 0';
+
+    const dialog = document.createElement('div');
+    dialog.style.position = 'fixed';
+    dialog.style.top = '50%';
+    dialog.style.left = '50%';
+    dialog.style.transform = 'translate(-50%, -50%)';
+    dialog.style.backgroundColor = 'white';
+    dialog.style.padding = '20px';
+    dialog.style.border = '1px solid #ccc';
+    dialog.style.zIndex = '1000';
+
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    dialog.appendChild(messageElement);
+    dialog.appendChild(textarea);
+
+    const okButton = document.createElement('button');
+    okButton.textContent = 'OK';
+    okButton.style.marginRight = '10px';
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+
+    dialog.appendChild(okButton);
+    dialog.appendChild(cancelButton);
+
+    document.body.appendChild(dialog);
+
+    return new Promise(resolve => {
+        okButton.onclick = () => {
+            document.body.removeChild(dialog);
+            resolve(textarea.value);
+        };
+        cancelButton.onclick = () => {
+            document.body.removeChild(dialog);
+            resolve(null);
+        };
     });
 }
 
