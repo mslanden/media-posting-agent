@@ -17,7 +17,7 @@ function loadScheduledPostsJS() {
                             <div>
                                 <p><strong>Tweet:</strong> ${post.tweet}</p>
                                 <p><strong>Scheduled:</strong> ${post.post_date} ${post.post_time}</p>
-                                ${post.image_path ? `<img src="${post.image_path}" alt="Post Image" style="max-width: 100px; max-height: 100px;">` : ''}
+                                ${post.image_path ? `<img src="/${post.image_path}" alt="Post Image" style="max-width: 100px; max-height: 100px;">` : ''}
                             </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath) {
             <input type="date" id="edit-date" value="${postDate}">
             <label for="edit-time">Time:</label>
             <input type="time" id="edit-time" value="${postTime}">
-            ${imagePath ? `<img src="${imagePath}" alt="Post Image" style="max-width: 200px; max-height: 200px;">` : ''}
+            ${imagePath ? `<img src="/${imagePath}" alt="Post Image" style="max-width: 200px; max-height: 200px;">` : ''}
             <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
                 <button id="save-edit-button">Save</button>
                 <button id="delete-post-button">Delete</button>
