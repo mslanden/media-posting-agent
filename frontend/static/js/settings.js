@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (llmModel === "anthropic") {
             apiKey = document.getElementById("anthropic-api-key").value;
         }
+        const twitterApiKey = document.getElementById("twitter_api_key").value;
+        const twitterApiSecret = document.getElementById("twitter_api_secret").value;
+        const twitterAccessToken = document.getElementById("twitter_access_token").value;
+        const twitterAccessTokenSecret = document.getElementById("twitter_access_token_secret").value;
+
+        const linkedinClientId = document.getElementById("linkedin_client_id").value;
+        const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
+        const linkedinAccessToken = document.getElementById("linkedin_access_token").value;
+
         const darkMode = document.getElementById("dark-mode-toggle").checked;
 
         fetch("/save_settings", {
@@ -20,8 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({
                 api_key: apiKey,
+                api_key: apiKey,
                 llm_model: llmModel,
                 dark_mode: darkMode,
+                twitter_api_key: twitterApiKey,
+                twitter_api_secret: twitterApiSecret,
+                twitter_access_token: twitterAccessToken,
+                twitter_access_token_secret: twitterAccessTokenSecret,
+                linkedin_client_id: linkedinClientId,
+                linkedin_client_secret: linkedinClientSecret,
+                linkedin_access_token: linkedinAccessToken,
             }),
         })
             .then((response) => response.json())

@@ -5,8 +5,16 @@ SETTINGS_FILE = "settings.json"
 
 DEFAULT_SETTINGS = {
     "api_key": "",
+    "api_key": "",
     "llm_model": "openai",
-    "dark_mode": False
+    "dark_mode": False,
+    "twitter_api_key": "",
+    "twitter_api_secret": "",
+    "twitter_access_token": "",
+    "twitter_access_token_secret": "",
+    "linkedin_client_id": "",
+    "linkedin_client_secret": "",
+    "linkedin_access_token": ""
 }
 
 def save_settings(settings):

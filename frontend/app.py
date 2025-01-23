@@ -23,7 +23,17 @@ app = Flask(__name__)
 load_dotenv()
 
 settings = load_settings()
+
+# Set environment variables *after* loading settings
 os.environ["API_KEY"] = settings.get("api_key", "")
+os.environ["TWITTER_API_KEY"] = settings.get("twitter_api_key", "")
+os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
+os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
+os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
+os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
+os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
+os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
+
 
 load_scheduled = False # Load scheduled posts by default
 
@@ -142,8 +152,20 @@ def generate_content():
 def save_settings_route():
     data = request.get_json()
     api_key = data.get("api_key")
+    api_key = data.get("api_key")
     llm_model = data.get("llm_model")
     dark_mode = data.get("dark_mode")
+
+    twitter_api_key = data.get("twitter_api_key")
+    twitter_api_secret = data.get("twitter_api_secret")
+    twitter_access_token = data.get("twitter_access_token")
+    twitter_access_token_secret = data.get("twitter_access_token_secret")
+
+    linkedin_client_id = data.get("linkedin_client_id")
+    linkedin_client_secret = data.get("linkedin_client_secret")
+    linkedin_access_token = data.get("linkedin_access_token")
+
+
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
     if not llm_model:
@@ -153,13 +175,21 @@ def save_settings_route():
 
     settings = {
         "api_key": api_key,
+        "api_key": api_key,
         "llm_model": llm_model,
-        "dark_mode": dark_mode
+        "dark_mode": dark_mode,
+        "twitter_api_key": twitter_api_key,
+        "twitter_api_secret": twitter_api_secret,
+        "twitter_access_token": twitter_access_token,
+        "twitter_access_token_secret": twitter_access_token_secret,
+        "linkedin_client_id": linkedin_client_id,
+        "linkedin_client_secret": linkedin_client_secret,
+        "linkedin_access_token": linkedin_access_token
     }
     if save_settings(settings):
-        return jsonify({"message": f"{llm_model} API key saved successfully"}), 200
+        return jsonify({"message": "Settings saved successfully!"}), 200 # More generic success message
     else:
-        return jsonify({"error": f"Failed to save settings"}), 500
+        return jsonify({"error": "Failed to save settings"}), 500
 
 @app.route("/get_posts", methods=["GET"])
 def get_posts():
