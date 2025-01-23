@@ -108,6 +108,7 @@ def generate_content():
         "media_type": media_type
     }
     if save_post(post):
+        schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
         return jsonify({"message": content}), 200
     else:
         return jsonify({"error": "Failed to save post"}), 500

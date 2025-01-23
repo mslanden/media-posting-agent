@@ -94,9 +94,9 @@ def load_posts():
         try:
             with open(POST_HISTORY_FILE, "r") as f:
                 posts = json.load(f)
+                if not load_scheduled:
+                    posts = [post for post in posts if 'post_time' not in post or not post['post_time']] # Filter out scheduled posts if needed
             return posts
-        except Exception as e:
-            print(f"Error loading posts: {e}")
-            return []
-    else:
-        return []
+        except json.JSONDecodeError:
+            pass # Handle empty or corrupted file
+    return posts
