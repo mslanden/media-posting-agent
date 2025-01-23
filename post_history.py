@@ -3,6 +3,7 @@ import os
 
 POST_HISTORY_FILE = "post_history.json"
 
+load_scheduled = False # Load scheduled posts by default
 
 def save_post(post):
     """

@@ -25,10 +25,35 @@ load_dotenv()
 settings = load_settings()
 os.environ["API_KEY"] = settings.get("api_key", "")
 
+load_scheduled = False # Load scheduled posts by default
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown()) # Ensure scheduler shuts down when app exits
+
+
+def schedule_post(post_id, post_time, content, media_type, image_path=None):
+    if post_time:
+        post_datetime = datetime.combine(datetime.now().date(), datetime.strptime(post_time, "%H:%M").time())
+        if post_datetime < datetime.now():
+            post_datetime += timedelta(days=1) # Schedule for tomorrow if time has already passed
+        scheduler.add_job(
+            post_content,
+            'date',
+            run_date=post_datetime,
+            args=[content, media_type, image_path],
+            id=post_id
+        )
+
+def post_content(content, media_type, image_path=None):
+    if media_type == "tweet":
+        result = post_tweet(content, image_path)
+    elif media_type == "linkedin":
+        result = post_to_linkedin(content, image_path)
+    else:
+        result = f"Unsupported media type for posting: {media_type}"
+    print(result) # Log the result of the posting attempt
+
 
 @app.route("/")
 def home():
