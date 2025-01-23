@@ -159,6 +159,7 @@ def save_settings_route():
     twitter_access_token_secret = data.get("twitter_access_token_secret")
 
     linkedin_client_id = data.get("linkedin_client_id")
+    linkedin_client_secret = data.get("linkedin_client_secret")
     linkedin_access_token = data.get("linkedin_access_token")
     twitter_bearer_token = data.get("twitter_bearer_token")
 

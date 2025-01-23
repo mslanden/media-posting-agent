@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const linkedinClientId = document.getElementById("linkedin_client_id").value;
         const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
-        const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
         const linkedinAccessToken = document.getElementById("linkedin_access_token").value;
         const twitterBearerToken = document.getElementById("twitter_bearer_token").value;
 
