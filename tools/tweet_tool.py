@@ -1,7 +1,7 @@
 import tweepy
 import os
 
-def post_tweet(tweet_text, image_path=None):
+def post_tweet(tweet_text):
     # Replace with your actual API keys and secrets
     api_key = os.environ.get("TWITTER_API_KEY")
     api_secret = os.environ.get("TWITTER_API_SECRET")
@@ -16,11 +16,7 @@ def post_tweet(tweet_text, image_path=None):
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
-        if image_path:
-            media = api.media_upload(filename=image_path)
-            api.update_status(status=tweet_text, media_ids=[media.media_id])
-        else:
-            api.update_status(status=tweet_text)
+        api.update_status(status=tweet_text)
         return "Tweet posted successfully!"
     except Exception as e:
         return f"Error posting tweet: {e}"

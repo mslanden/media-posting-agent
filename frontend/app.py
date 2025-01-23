@@ -43,7 +43,7 @@ scheduler.start()
 atexit.register(lambda: scheduler.shutdown()) # Ensure scheduler shuts down when app exits
 
 
-def schedule_post(post_id, post_time, content, media_type, image_path=None):
+def schedule_post(post_id, post_time, content, media_type):
     if post_time:
         post_datetime = datetime.combine(datetime.now().date(), datetime.strptime(post_time, "%H:%M").time())
         if post_datetime < datetime.now():
@@ -52,15 +52,15 @@ def schedule_post(post_id, post_time, content, media_type, image_path=None):
             post_content,
             'date',
             run_date=post_datetime,
-            args=[content, media_type, image_path],
+            args=[content, media_type],
             id=post_id
         )
 
-def post_content(content, media_type, image_path=None):
+def post_content(content, media_type):
     if media_type == "tweet":
-        result = post_tweet(content, image_path)
+        result = post_tweet(content)
     elif media_type == "linkedin":
-        result = post_to_linkedin(content, image_path)
+        result = post_to_linkedin(content)
     else:
         result = f"Unsupported media type for posting: {media_type}"
     print(result) # Log the result of the posting attempt
@@ -140,11 +140,10 @@ def generate_content():
         "content": content,
         "post_date": post_date,
         "post_time": post_time,
-        "image_path": image_path,
         "media_type": media_type
     }
     if save_post(post):
-        schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
+        schedule_post(post['id'], post['post_time'], post['content'], post['media_type']) # Schedule the post
         return jsonify({"message": content}), 200
     else:
         return jsonify({"error": "Failed to save post"}), 500
