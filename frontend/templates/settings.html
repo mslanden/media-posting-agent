@@ -88,20 +88,6 @@
                                     id="openai-api-key"
                                     placeholder="Enter OpenAI API Key"
                                     value="{% if settings and settings.llm_model == 'openai' %}{{ settings.api_key }}{% endif %}"
-                                />
-                            </div>
-                            <div
-                                id="openai-api-key-input"
-                                style="display: {% if settings and settings.llm_model == 'openai' %}block{% else %}none{% endif %};"
-                            >
-                                <label for="openai-api-key">OpenAI API Key:</label>
-                                <input
-                                    type="text"
-                                    id="openai-api-key"
-                                    placeholder="Enter OpenAI API Key"
-                                    value="{% if settings and settings.llm_model == 'openai' %}{{ settings.api_key }}{% endif %}"
-                                />
-                            </div>
                             <div
                                 id="gemini-api-key-input"
                                 style="display: {% if settings and settings.llm_model == 'gemini' %}block{% else %}none{% endif %};"

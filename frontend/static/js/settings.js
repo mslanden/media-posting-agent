@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({
                 api_key: apiKey,
-                api_key: apiKey,
                 llm_model: llmModel,
                 dark_mode: darkMode,
                 twitter_api_key: twitterApiKey,
