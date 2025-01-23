@@ -77,6 +77,63 @@
                                 id="dark-mode-toggle"
                                 {% if settings and settings.dark_mode %}checked{% endif %}
                             />
+                        <li id="api-key-inputs" style="grid-column: 1 / -1;">
+                            <div
+                                id="openai-api-key-input"
+                                style="display: {% if settings and settings.llm_model == 'openai' %}block{% else %}none{% endif %};"
+                            >
+                                <label for="openai-api-key">OpenAI API Key:</label>
+                                <input
+                                    type="text"
+                                    id="openai-api-key"
+                                    placeholder="Enter OpenAI API Key"
+                                    value="{% if settings and settings.llm_model == 'openai' %}{{ settings.api_key }}{% endif %}"
+                                />
+                            </div>
+                            <div
+                                id="gemini-api-key-input"
+                                style="display: {% if settings and settings.llm_model == 'gemini' %}block{% else %}none{% endif %};"
+                            >
+                                <label for="gemini-api-key">Gemini API Key:</label>
+                                <input
+                                    type="text"
+                                    id="gemini-api-key"
+                                    placeholder="Enter Gemini API Key"
+                                    value="{% if settings and settings.llm_model == 'gemini' %}{{ settings.api_key }}{% endif %}"
+                                />
+                            </div>
+                            <div
+                                id="anthropic-api-key-input"
+                                style="display: {% if settings and settings.llm_model == 'anthropic' %}block{% else %}none{% endif %};"
+                            >
+                                <label for="anthropic-api-key"
+                                    >Anthropic API Key:</label
+                                >
+                                <input
+                                    type="text"
+                                    id="anthropic-api-key"
+                                    placeholder="Enter Anthropic API Key"
+                                    value="{% if settings and settings.llm_model == 'anthropic' %}{{ settings.api_key }}{% endif %}"
+                                />
+                            </div>
+                            <div id="twitter-api-keys">
+                                <label for="twitter_api_key">Twitter API Key:</label>
+                                <input type="text" id="twitter_api_key" name="twitter_api_key" value="{% if settings.twitter_api_key %}{{ settings.twitter_api_key }}{% endif %}">
+                                <label for="twitter_api_secret">Twitter API Secret:</label>
+                                <input type="text" id="twitter_api_secret" name="twitter_api_secret" value="{% if settings.twitter_api_secret %}{{ settings.twitter_api_secret }}{% endif %}">
+                                <label for="twitter_access_token">Twitter Access Token:</label>
+                                <input type="text" id="twitter_access_token" name="twitter_access_token" value="{% if settings.twitter_access_token %}{{ settings.twitter_access_token }}{% endif %}">
+                                <label for="twitter_access_token_secret">Twitter Access Token Secret:</label>
+                                <input type="text" id="twitter_access_token_secret" name="twitter_access_token_secret" value="{% if settings.twitter_access_token_secret %}{{ settings.twitter_access_token_secret }}{% endif %}">
+                            </div>
+                            <div id="linkedin-api-keys">
+                                <label for="linkedin_client_id">LinkedIn Client ID:</label>
+                                <input type="text" id="linkedin_client_id" name="linkedin_client_id" value="{% if settings.linkedin_client_id %}{{ settings.linkedin_client_id }}{% endif %}">
+                                <label for="linkedin_client_secret">LinkedIn Client Secret:</label>
+                                <input type="text" id="linkedin_client_secret" name="linkedin_client_secret" value="{% if settings.linkedin_client_secret %}{{ settings.linkedin_client_secret }}{% endif %}">
+                                <label for="linkedin_access_token">LinkedIn Access Token:</label>
+                                <input type="text" id="linkedin_access_token" name="linkedin_access_token" value="{% if settings.linkedin_access_token %}{{ settings.linkedin_access_token }}{% endif %}">
+                            </div>
                         </li>
                         <li style="margin-bottom: 10px;">
                             <label for="llm-model-select">LLM Model:</label>
