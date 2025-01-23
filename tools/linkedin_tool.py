@@ -1,4 +1,4 @@
-from linkedin import linkedin
+import linkedin
 import os
 
 def post_to_linkedin(post_text, image_path=None):
@@ -11,7 +11,7 @@ def post_to_linkedin(post_text, image_path=None):
         return "Error: Missing LinkedIn API credentials. Please configure them in settings."
 
     try:
-        authentication = linkedin.LinkedInAuthentication(client_id, client_secret, "http://localhost:5000/auth/linkedin/callback", linkedin.PERMISSIONS.enums.values())
+        authentication = linkedin.LinkedInAuthentication(client_id, client_secret, "http://localhost:5000/auth/linkedin/callback", permissions=list(linkedin.PERMISSIONS.values()))
         application = linkedin.LinkedInApplication(authentication)
 
         # LinkedIn API requires a different structure for image posts.  This is a simplified example.
