@@ -26,24 +26,17 @@ settings = load_settings()
 
 # Set environment variables *after* loading settings
 os.environ["API_KEY"] = settings.get("api_key", "")
-os.environ["TWITTER_API_KEY"] = settings["twitter_api_key"]
-os.environ["TWITTER_API_SECRET"] = settings["twitter_api_secret"]
-os.environ["TWITTER_ACCESS_TOKEN"] = settings["twitter_access_token"]
-os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings["twitter_access_token_secret"]
-
-os.environ["LINKEDIN_CLIENT_ID"] = settings["linkedin_client_id"]
-os.environ["LINKEDIN_CLIENT_SECRET"] = settings["linkedin_client_secret"]
-os.environ["LINKEDIN_ACCESS_TOKEN"] = settings["linkedin_access_token"]
 os.environ["TWITTER_API_KEY"] = settings.get("twitter_api_key", "")
 os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
 os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
 os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
+
 os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
 os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
 os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
 
 
-load_scheduled = False # Load scheduled posts by default
+load_scheduled = False  # Load scheduled posts by default
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -181,7 +174,6 @@ def save_settings_route():
         return jsonify({"error": "No dark mode provided"}), 400
 
     settings = {
-        "api_key": api_key,
         "api_key": api_key,
         "llm_model": llm_model,
         "dark_mode": dark_mode,
