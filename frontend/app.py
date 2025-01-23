@@ -11,12 +11,24 @@ import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
 from post_history import save_post, load_posts, update_post, delete_post
+import uuid
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime, timedelta
+from tools.tweet_tool import post_tweet  # Import your tweet posting function
+from tools.linkedin_tool import post_to_linkedin # Import your linkedin posting function
+
 
 app = Flask(__name__)
 load_dotenv()
 
 settings = load_settings()
 os.environ["API_KEY"] = settings.get("api_key", "")
+
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+atexit.register(lambda: scheduler.shutdown()) # Ensure scheduler shuts down when app exits
 
 @app.route("/")
 def home():
@@ -142,6 +154,7 @@ def update_post_route():
     else:
         return jsonify({"error": "Failed to update post"}), 500
 
+
 @app.route("/delete_post", methods=["POST"])
 def delete_post_route():
     data = request.get_json()
@@ -149,6 +162,10 @@ def delete_post_route():
     if not post_id:
         return jsonify({"error": "No post ID provided"}), 400
     if delete_post(post_id):
+        try:
+            scheduler.remove_job(post_id)
+        except Exception as e:
+            print(f"Error removing scheduled job: {e}") # Job might not exist if it already ran
         return jsonify({"message": "Post deleted successfully"}), 200
     else:
         return jsonify({"error": "Failed to delete post"}), 500
