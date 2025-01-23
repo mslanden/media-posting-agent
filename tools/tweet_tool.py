@@ -1,12 +1,14 @@
 import tweepy
 import os
+from settings import load_settings
+
 
 def post_tweet(tweet_text):
-    # Replace with your actual API keys and secrets
-    api_key = os.environ.get("TWITTER_API_KEY")
-    api_secret = os.environ.get("TWITTER_API_SECRET")
-    access_token = os.environ.get("TWITTER_ACCESS_TOKEN")
-    access_token_secret = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET")
+    settings = load_settings()
+    api_key = settings.get("twitter_api_key")
+    api_secret = settings.get("twitter_api_secret")
+    access_token = settings.get("twitter_access_token")
+    access_token_secret = settings.get("twitter_access_token_secret")
 
     if not all([api_key, api_secret, access_token, access_token_secret]):
         return "Error: Missing Twitter API credentials. Please configure them in settings."
