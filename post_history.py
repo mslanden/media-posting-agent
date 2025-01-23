@@ -3,7 +3,7 @@ import os
 
 POST_HISTORY_FILE = "post_history.json"
 
-load_scheduled = False # Load scheduled posts by default
+load_scheduled = True # Load scheduled posts by default
 
 def save_post(post):
     """
@@ -96,8 +96,9 @@ def load_posts():
             with open(POST_HISTORY_FILE, "r") as f:
                 posts = json.load(f)
                 if not load_scheduled:
-                    posts = [post for post in posts if 'post_time' not in post or not post['post_time']] # Filter out scheduled posts if needed
+                    posts = [post for post in posts if 'post_time' in post and post['post_time']] # Include scheduled posts if needed
             return posts
         except json.JSONDecodeError:
             pass # Handle empty or corrupted file
-    return posts
+
+    return [] if not posts else posts # Return empty list if posts is None
