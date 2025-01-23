@@ -45,14 +45,20 @@ document.addEventListener('DOMContentLoaded', function() {
             .then((response) => response.json())
             .then((data) => {
                 const errorDiv = document.getElementById("settings-error");
+                const successDiv = document.getElementById("settings-success"); // Add this line
+
                 if (data.error) {
-                    errorDiv.textContent = "Error: " + data.error;
-                    window.location.reload(); // Refresh the page to reflect changes
+                    errorDiv.textContent = data.error; // More specific error message
+                } else {
+                    successDiv.textContent = "Settings saved successfully!"; // Display success message
+                    setTimeout(() => {
+                        window.location.reload(); // Refresh only on success
+                    }, 1000); // Refresh after 1 second
                 }
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("An error occurred while saving settings.");
+                errorDiv.textContent = "An unexpected error occurred."; // Generic error message
             });
     });
 });
