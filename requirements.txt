@@ -3,3 +3,5 @@ requests
 beautifulsoup4
 markdownify
 python-dotenv
+tweepy
+python-linkedin
