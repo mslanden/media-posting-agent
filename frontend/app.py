@@ -181,10 +181,9 @@ def save_settings_route():
         "linkedin_client_id": linkedin_client_id,
         "linkedin_client_secret": linkedin_client_secret,
         "linkedin_access_token": linkedin_access_token,
-        "twitter_bearer_token": twitter_bearer_token # Add this line
+        "twitter_bearer_token": twitter_bearer_token
     }
     if save_settings(settings):
-        update_env_variables(settings) # Update environment variables *after* saving
         return jsonify({"message": "Settings saved successfully!"}), 200 # More generic success message
     else:
         return jsonify({"error": "Failed to save settings"}), 500
