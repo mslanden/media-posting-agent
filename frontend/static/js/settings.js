@@ -45,8 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const errorDiv = document.getElementById("settings-error");
                 if (data.error) {
                     errorDiv.textContent = "Error: " + data.error;
-                } else {
-                    errorDiv.textContent = "Success: " + data.message;
+                    window.location.reload(); // Refresh the page to reflect changes
                 }
             })
             .catch((error) => {

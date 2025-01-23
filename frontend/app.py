@@ -22,25 +22,23 @@ from tools.linkedin_tool import post_to_linkedin # Import your linkedin posting 
 app = Flask(__name__)
 load_dotenv()
 
-settings = load_settings()
-
-# Set environment variables *after* loading settings
-os.environ["API_KEY"] = settings.get("api_key", "")
-os.environ["TWITTER_API_KEY"] = settings.get("twitter_api_key", "")
-os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
-os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
-os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
-
-os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
-os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
-os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
-
-
 load_scheduled = False  # Load scheduled posts by default
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown()) # Ensure scheduler shuts down when app exits
+
+
+def update_env_variables(settings):
+    os.environ["API_KEY"] = settings.get("api_key", "")
+    os.environ["TWITTER_API_KEY"] = settings.get("twitter_api_key", "")
+    os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
+    os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
+    os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
+
+    os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
+    os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
+    os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
 
 
 def schedule_post(post_id, post_time, content, media_type):
@@ -185,6 +183,7 @@ def save_settings_route():
         "linkedin_access_token": linkedin_access_token
     }
     if save_settings(settings):
+        update_env_variables(settings) # Update environment variables *after* saving
         return jsonify({"message": "Settings saved successfully!"}), 200 # More generic success message
     else:
         return jsonify({"error": "Failed to save settings"}), 500
