@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const linkedinClientId = document.getElementById("linkedin_client_id").value;
         const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
+        const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
         const linkedinAccessToken = document.getElementById("linkedin_access_token").value;
         const twitterBearerToken = document.getElementById("twitter_bearer_token").value;
 
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 twitter_access_token_secret: twitterAccessTokenSecret,
                 linkedin_client_id: linkedinClientId,
                 linkedin_client_secret: linkedinClientSecret,
+                linkedin_client_secret: linkedinClientSecret, // Add this line
                 linkedin_access_token: linkedinAccessToken,
                 twitter_bearer_token: twitterBearerToken,
             }),
