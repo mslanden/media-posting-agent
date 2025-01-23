@@ -157,47 +157,6 @@
                                     Anthropic
                                 </option>
                             </select>
-                        </li>
-                        <li id="api-key-inputs">
-                            <div
-                                id="openai-api-key-input"
-                                style="display: {% if settings and settings.llm_model == 'openai' %}block{% else %}none{% endif %};"
-                            >
-                                <label for="openai-api-key">OpenAI API Key:</label>
-                                <input
-                                    type="text"
-                                    id="openai-api-key"
-                                    placeholder="Enter OpenAI API Key"
-                                    value="{% if settings and settings.llm_model == 'openai' %}{{ settings.api_key }}{% endif %}"
-                                />
-                            </div>
-                            <div
-                                id="gemini-api-key-input"
-                                style="display: {% if settings and settings.llm_model == 'gemini' %}block{% else %}none{% endif %};"
-                            >
-                                <label for="gemini-api-key">Gemini API Key:</label>
-                                <input
-                                    type="text"
-                                    id="gemini-api-key"
-                                    placeholder="Enter Gemini API Key"
-                                    value="{% if settings and settings.llm_model == 'gemini' %}{{ settings.api_key }}{% endif %}"
-                                />
-                            </div>
-                            <div
-                                id="anthropic-api-key-input"
-                                style="display: {% if settings and settings.llm_model == 'anthropic' %}block{% else %}none{% endif %};"
-                            >
-                                <label for="anthropic-api-key"
-                                    >Anthropic API Key:</label
-                                >
-                                <input
-                                    type="text"
-                                    id="anthropic-api-key"
-                                    placeholder="Enter Anthropic API Key"
-                                    value="{% if settings and settings.llm_model == 'anthropic' %}{{ settings.api_key }}{% endif %}"
-                                />
-                            </div>
-                        </li>
                     </ul>
                     <div style="display: flex; justify-content: flex-end;">
                         <button type="submit">Save Settings</button>
