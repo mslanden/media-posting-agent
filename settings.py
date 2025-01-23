@@ -13,7 +13,8 @@ DEFAULT_SETTINGS = {
     "twitter_access_token_secret": "",
     "linkedin_client_id": "",
     "linkedin_client_secret": "",
-    "linkedin_access_token": ""
+    "linkedin_access_token": "",
+    "twitter_bearer_token": ""
 }
 
 def save_settings(settings):
