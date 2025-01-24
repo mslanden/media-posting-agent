@@ -19,6 +19,24 @@
         <div class="container">
             <div id="scheduled-posts-box" class="card">
                 <h2 style="text-align: center; margin-bottom: 20px">Scheduled Posts</h2>
+                <div id="schedule-post-form">
+                    <label for="post-content">Content:</label>
+                    <textarea id="post-content" style="width: 100%; height: 100px;"></textarea>
+                    <label for="post-date">Date:</label>
+                    <input type="date" id="post-date" required>
+                    <label for="post-time">Time:</label>
+                    <input type="time" id="post-time" required>
+                     <label for="image-path">Image Path:</label>
+                    <input type="text" id="image-path" style="width: 100%;">
+                    <label for="media-type">Media Type:</label>
+                    <select id="media-type">
+                        <option value="tweet">Tweet</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="newsletter">Newsletter</option>
+                        <option value="article">Article</option>
+                    </select>
+                    <button id="schedule-button">Schedule Post</button>
+                </div>
                 <ul id="post-list">
                 </ul>
             </div>
@@ -29,6 +47,39 @@
                 window.location.href = '/';
             });
             loadScheduledPostsJS();
+             document.getElementById('schedule-button').addEventListener('click', function() {
+                const content = document.getElementById('post-content').value;
+                const postDate = document.getElementById('post-date').value;
+                const postTime = document.getElementById('post-time').value;
+                const imagePath = document.getElementById('image-path').value;
+                const mediaType = document.getElementById('media-type').value;
+
+                fetch('/schedule_post', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: content,
+                        post_date: postDate,
+                        post_time: postTime,
+                        image_path: imagePath,
+                        media_type: mediaType
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error scheduling post: ' + data.error);
+                    } else {
+                        loadScheduledPostsJS();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while scheduling the post.');
+                });
+            });
         </script>
     </body>
 </html>
