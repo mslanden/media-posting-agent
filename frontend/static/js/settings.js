@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const linkedinClientSecret = document.getElementById("linkedin_client_secret").value;
         const linkedinAccessToken = document.getElementById("linkedin_access_token").value;
         const twitterBearerToken = document.getElementById("twitter_bearer_token").value;
+        const linkedinUsername = document.getElementById("linkedin-username").value;
+        const linkedinPassword = document.getElementById("linkedin-password").value;
 
         const darkMode = document.getElementById("dark-mode-toggle").checked;
 
@@ -38,15 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 twitter_access_token_secret: twitterAccessTokenSecret,
                 linkedin_client_id: linkedinClientId,
                 linkedin_client_secret: linkedinClientSecret,
-                linkedin_client_secret: linkedinClientSecret, // Add this line
                 linkedin_access_token: linkedinAccessToken,
                 twitter_bearer_token: twitterBearerToken,
+                linkedin_username: linkedinUsername,
+                linkedin_password: linkedinPassword
             }),
         })
             .then((response) => response.json())
             .then((data) => {
                 const errorDiv = document.getElementById("settings-error");
-                const successDiv = document.getElementById("settings-success"); // Add this line
+                const successDiv = document.getElementById("settings-success");
 
                 if (data.error) {
                     errorDiv.textContent = data.error; // More specific error message
