@@ -138,7 +138,8 @@ def generate_content():
         "content": content,
         "post_date": post_date,
         "post_time": post_time,
-        "media_type": media_type
+        "media_type": media_type,
+        "image_path": image_path
     }
     if save_post(post):
         schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
