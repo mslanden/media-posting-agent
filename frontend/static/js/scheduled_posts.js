@@ -59,8 +59,9 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
         </div>
     `;
     document.body.appendChild(modal);
-    document.getElementById('edit-content').value = tweet;
-    updateCharCount(document.getElementById('edit-content'));
+    const editContent = document.getElementById('edit-content');
+    editContent.value = tweet;
+    updateCharCount(editContent);
 
     const closeButton = modal.querySelector('.close-button');
     closeButton.onclick = () => {
@@ -69,7 +70,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
 
     const saveButton = modal.querySelector('#save-edit-button');
     saveButton.onclick = () => {
-        const newContent = document.getElementById('edit-content').value;
+        const newContent = editContent.value;
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
         const imagePath = document.getElementById('edit-image').value;
