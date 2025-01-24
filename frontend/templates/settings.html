@@ -146,7 +146,12 @@
                                 <input type="text" id="linkedin_access_token" name="linkedin_access_token" value="{% if settings.linkedin_access_token %}{{ settings.linkedin_access_token }}{% endif %}">
                                 <label for="twitter_bearer_token">Twitter Bearer Token:</label>
                                 <input type="text" id="twitter_bearer_token" name="twitter_bearer_token" value="{% if settings.twitter_bearer_token %}{{ settings.twitter_bearer_token }}{% endif %}">
-
+                            </div>
+                            <div id="linkedin-credentials">
+                                <label for="linkedin-username">LinkedIn Username:</label>
+                                <input type="text" id="linkedin-username" name="linkedin_username" value="{% if settings.linkedin_username %}{{ settings.linkedin_username }}{% endif %}">
+                                <label for="linkedin-password">LinkedIn Password:</label>
+                                <input type="password" id="linkedin-password" name="linkedin_password" value="{% if settings.linkedin_password %}{{ settings.linkedin_password }}{% endif %}">
                             </div>
                         </li>
                         <li style="margin-bottom: 10px;">
