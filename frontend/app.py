@@ -116,7 +116,7 @@ def generate_content():
         image_filename = f"image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
         image_path = os.path.join(images_dir, image_filename)
         image.save(image_path)
-        image_path = os.path.relpath(image_path, "frontend")
+        image_path = os.path.relpath(image_path, ".")
 
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
