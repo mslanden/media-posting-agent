@@ -14,7 +14,9 @@ DEFAULT_SETTINGS = {
     "linkedin_client_id": "",
     "linkedin_client_secret": "",
     "linkedin_access_token": "",
-    "twitter_bearer_token": ""
+    "twitter_bearer_token": "",
+    "linkedin_username": "",
+    "linkedin_password": ""
 }
 
 def save_settings(settings):
