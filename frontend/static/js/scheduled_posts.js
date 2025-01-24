@@ -42,6 +42,8 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
             <h2>Edit Post</h2>
             <label for="edit-content">Content:</label>
             <textarea id="edit-content" style="width: 100%; height: 100px;">${tweet}</textarea>
+            <label for="edit-image">Image Path:</label>
+            <input type="text" id="edit-image" value="${imagePath || ''}" style="width: 100%;">
             <label for="edit-date">Date:</label>
             <input type="date" id="edit-date" value="${postDate}">
             <label for="edit-time">Time:</label>
