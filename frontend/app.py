@@ -41,7 +41,7 @@ def update_env_variables(settings):
     os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
 
 
-def schedule_post(post_id, post_time, content, media_type):
+def schedule_post(post_id, post_time, content, media_type, image_path=None):
     if post_time:
         post_datetime = datetime.combine(datetime.now().date(), datetime.strptime(post_time, "%H:%M").time())
         if post_datetime < datetime.now():
@@ -50,15 +50,15 @@ def schedule_post(post_id, post_time, content, media_type):
             post_content,
             'date',
             run_date=post_datetime,
-            args=[content, media_type],
+            args=[content, media_type, image_path],
             id=post_id
         )
 
-def post_content(content, media_type):
+def post_content(content, media_type, image_path=None):
     if media_type == "tweet":
-        result = post_tweet(content)
+        result = post_tweet(content, [image_path] if image_path else None)
     elif media_type == "linkedin":
-        result = post_to_linkedin(content)
+        result = post_to_linkedin(content, image_path)
     else:
         result = f"Unsupported media type for posting: {media_type}"
     print(result) # Log the result of the posting attempt
@@ -141,7 +141,7 @@ def generate_content():
         "media_type": media_type
     }
     if save_post(post):
-        schedule_post(post['id'], post['post_time'], post['content'], post['media_type']) # Schedule the post
+        schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
         return jsonify({"message": content}), 200
     else:
         return jsonify({"error": "Failed to save post"}), 500
@@ -204,6 +204,14 @@ def update_post_route():
     if not updated_post:
         return jsonify({"error": "No updated post data provided"}), 400
     if update_post(post_id, updated_post):
+        post = load_posts()
+        post = next((item for item in post if item["id"] == post_id), None)
+        if post:
+            try:
+                scheduler.remove_job(post_id)
+            except Exception as e:
+                print(f"Error removing scheduled job: {e}") # Job might not exist if it already ran
+            schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
         return jsonify({"message": "Post updated successfully"}), 200
     else:
         return jsonify({"error": "Failed to update post"}), 500
