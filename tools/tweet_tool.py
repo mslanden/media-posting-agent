@@ -32,7 +32,8 @@ def post_tweet(tweet_text, media_paths=None):
         media_ids = []
         if media_paths:
             for media_path in media_paths:
-                uploaded_media = v1_api.media_upload(media_path)
+                full_media_path = os.path.join("frontend", media_path)
+                uploaded_media = v1_api.media_upload(full_media_path)
                 media_ids.append(uploaded_media.media_id)
 
         # Post tweet with media

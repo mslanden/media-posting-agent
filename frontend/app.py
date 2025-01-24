@@ -211,8 +211,8 @@ def update_post_route():
             try:
                 scheduler.remove_job(post_id)
             except Exception as e:
-                print(f"Error removing scheduled job: {e}") # Job might not exist if it already ran
-            schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
+                print(f"Error removing scheduled job: {e}")
+            schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path'))
         return jsonify({"message": "Post updated successfully"}), 200
     else:
         return jsonify({"error": "Failed to update post"}), 500
@@ -228,7 +228,7 @@ def delete_post_route():
         try:
             scheduler.remove_job(post_id)
         except Exception as e:
-            print(f"Error removing scheduled job: {e}") # Job might not exist if it already ran
+            print(f"Error removing scheduled job: {e}")
         return jsonify({"message": "Post deleted successfully"}), 200
     else:
         return jsonify({"error": "Failed to delete post"}), 500
