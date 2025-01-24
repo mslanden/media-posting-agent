@@ -175,6 +175,8 @@ def save_settings_route():
     linkedin_client_id = data.get("linkedin_client_id")
     linkedin_client_secret = data.get("linkedin_client_secret")
     linkedin_access_token = data.get("linkedin_access_token")
+    linkedin_username = data.get("linkedin_username")
+    linkedin_password = data.get("linkedin_password")
     twitter_bearer_token = data.get("twitter_bearer_token")
 
 
@@ -196,6 +198,8 @@ def save_settings_route():
         "linkedin_client_id": linkedin_client_id,
         "linkedin_client_secret": linkedin_client_secret,
         "linkedin_access_token": linkedin_access_token,
+        "linkedin_username": linkedin_username,
+        "linkedin_password": linkedin_password,
         "twitter_bearer_token": twitter_bearer_token
     }
     if save_settings(settings):

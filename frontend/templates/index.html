@@ -243,6 +243,24 @@
                                 value="{% if settings and settings.llm_model == 'anthropic' %}{{ settings.api_key }}{% endif %}"
                             />
                         </div>
+                        <div>
+                            <label for="linkedin-username">LinkedIn Username:</label>
+                            <input
+                                type="text"
+                                id="linkedin-username"
+                                placeholder="Enter LinkedIn Username"
+                                value="{% if settings and settings.linkedin_username %}{{ settings.linkedin_username }}{% endif %}"
+                            />
+                        </div>
+                        <div>
+                            <label for="linkedin-password">LinkedIn Password:</label>
+                            <input
+                                type="password"
+                                id="linkedin-password"
+                                placeholder="Enter LinkedIn Password"
+                                value="{% if settings and settings.linkedin_password %}{{ settings.linkedin_password }}{% endif %}"
+                            />
+                        </div>
                     </div>
                     <button id="save-settings-button" style="margin-top: 10px">
                         Save Settings
