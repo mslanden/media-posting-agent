@@ -41,7 +41,8 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
             <span class="close-button">&times;</span>
             <h2>Edit Post</h2>
             <label for="edit-content">Content:</label>
-            <textarea id="edit-content" style="width: 100%; height: 100px;">${tweet}</textarea>
+            <textarea id="edit-content" style="width: 100%; height: 100px;" oninput="updateCharCount(this)"></textarea>
+            <p id="char-count" style="text-align: right;">Characters: 0</p>
             <label for="edit-image">Image Path:</label>
             <input type="text" id="edit-image" value="${imagePath || ''}" style="width: 100%;">
             <label for="edit-date">Date:</label>
@@ -58,6 +59,8 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
         </div>
     `;
     document.body.appendChild(modal);
+    document.getElementById('edit-content').value = tweet;
+    updateCharCount(document.getElementById('edit-content'));
 
     const closeButton = modal.querySelector('.close-button');
     closeButton.onclick = () => {
