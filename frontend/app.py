@@ -55,13 +55,26 @@ def schedule_post(post_id, post_time, content, media_type, image_path=None):
         )
 
 def post_content(content, media_type, image_path=None):
-    if media_type == "tweet":
-        result = post_tweet(content, [image_path] if image_path else None)
-    elif media_type == "linkedin":
-        result = post_to_linkedin(content, image_path)
-    else:
-        result = f"Unsupported media type for posting: {media_type}"
-    print(result) # Log the result of the posting attempt
+    try:
+        if media_type == "tweet":
+            # Add more detailed error logging
+            print(f"Attempting to post tweet: {content}")
+            print(f"Image path: {image_path}")
+
+            result = post_tweet(content, [image_path] if image_path else None)
+
+            # If result indicates an error, log more details
+            if "Error" in result:
+                print(f"Tweet posting error: {result}")
+
+        elif media_type == "linkedin":
+            result = post_to_linkedin(content, image_path)
+        else:
+            result = f"Unsupported media type for posting: {media_type}"
+
+        print(f"Posting result: {result}")
+    except Exception as e:
+        print(f"Unexpected error in post_content: {e}")
 
 
 @app.route("/")
@@ -132,7 +145,7 @@ def generate_content():
         content = newsletter_agent.generate_newsletter(scraped_data, message, image_path)
     else:
         return jsonify({"error": "Unsupported media type"}), 400
-    
+
     post = {
         "id": str(uuid.uuid4()),
         "content": content,
