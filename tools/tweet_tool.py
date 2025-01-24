@@ -36,12 +36,9 @@ def post_tweet(tweet_text, media_paths=None):
         if media_paths:
             for media_path in media_paths:
                 full_media_path = os.path.join(".", media_path)
-
-                # Validate file path
                 if not os.path.exists(full_media_path):
                     print(f"Warning: Media file not found - {full_media_path}")
                     continue
-
                 uploaded_media = v1_api.media_upload(full_media_path)
                 media_ids.append(uploaded_media.media_id)
 
