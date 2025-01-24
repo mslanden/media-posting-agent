@@ -69,6 +69,7 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
         const newContent = document.getElementById('edit-content').value;
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
+        const imagePath = document.getElementById('edit-image').value;
 
         fetch('/update_post', {
             method: 'POST',
@@ -80,7 +81,8 @@ function editPost(postId, tweet, postDate, postTime, imagePath, mediaType) {
                 updated_post: {
                     content: newContent,
                     post_date: newDate,
-                    post_time: newTime
+                    post_time: newTime,
+                    image_path: imagePath
                 }
             }),
         })
