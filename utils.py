@@ -24,7 +24,12 @@ def scrape_and_format_url(url, timeout=10, max_retries=3):
 
     try:
         response = http.get(url, headers=headers, timeout=timeout)
-        response.raise_for_status()
+        
+        if response.status_code != 200:
+            print(f"Error: HTTP error {response.status_code} for URL: {url}")
+            print(f"Response content: {response.content}")
+            response.raise_for_status()
+        
         soup = BeautifulSoup(response.content, 'html.parser')
         
         # Attempt to find the main article content
@@ -34,6 +39,7 @@ def scrape_and_format_url(url, timeout=10, max_retries=3):
         if not article:
             article = soup.find('div', id='content')
         if not article:
+            print(f"Error: Could not find main article content for URL: {url}")
             return "Error: Could not find main article content"
         
         text_content = markdownify.markdownify(str(article))
@@ -53,8 +59,10 @@ def scrape_and_format_url(url, timeout=10, max_retries=3):
         
         return "\n".join(cleaned_lines)
     except requests.exceptions.RequestException as e:
+        print(f"Error: Could not retrieve URL: {e}")
         return f"Error: Could not retrieve URL: {e}"
     except Exception as e:
+        print(f"Error: An unexpected error occurred: {e}")
         return f"Error: An unexpected error occurred: {e}"
 
 def save_markdown_file(content, filename="webdata.md"):
