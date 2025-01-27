@@ -5,7 +5,10 @@ import os
 
 def scrape_and_format_url(url):
     try:
-        response = requests.get(url)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        }
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         
@@ -14,7 +17,7 @@ def scrape_and_format_url(url):
         if not article:
             article = soup.find('main')
         if not article:
-             article = soup.find('div', id='content')
+            article = soup.find('div', id='content')
         if not article:
             return "Error: Could not find main article content"
         
