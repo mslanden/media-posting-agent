@@ -8,7 +8,17 @@ def scrape_and_format_url(url):
         response = requests.get(url)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
-        text_content = markdownify.markdownify(str(soup))
+        
+        # Attempt to find the main article content
+        article = soup.find('div', class_='article-content')
+        if not article:
+            article = soup.find('main')
+        if not article:
+             article = soup.find('div', id='content')
+        if not article:
+            return "Error: Could not find main article content"
+        
+        text_content = markdownify.markdownify(str(article))
 
         # Remove extra empty lines
         lines = text_content.splitlines()
