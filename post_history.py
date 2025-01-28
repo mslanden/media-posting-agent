@@ -91,6 +91,7 @@ def load_posts():
     Returns:
         list: The loaded posts, or an empty list if the file does not exist or is invalid.
     """
+    posts = []
     if os.path.exists(POST_HISTORY_FILE):
         try:
             with open(POST_HISTORY_FILE, "r") as f:
@@ -101,4 +102,4 @@ def load_posts():
         except json.JSONDecodeError:
             pass # Handle empty or corrupted file
 
-    return [] if not posts else posts # Return empty list if posts is None
+    return posts # Return empty list if posts is None
