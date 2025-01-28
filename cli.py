@@ -7,6 +7,7 @@ from frontend.app import generate_content
 from scraper import Scraper
 from settings import load_settings
 from post_history import save_post
+from datetime import datetime
 
 __version__ = "1.0.0"
 
@@ -15,6 +16,23 @@ def validate_url(url: str) -> str:
     if not url.startswith(('http://', 'https://')):
         raise argparse.ArgumentTypeError("URL must start with http:// or https://")
     return url
+
+def validate_date(date_str: str) -> str:
+    """Validate date format."""
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+        return date_str
+    except ValueError:
+        raise argparse.ArgumentTypeError("Date must be in YYYY-MM-DD format")
+
+def validate_time(time_str: str) -> str:
+    """Validate time format."""
+    try:
+        datetime.strptime(time_str, "%H:%M")
+        return time_str
+    except ValueError:
+        raise argparse.ArgumentTypeError("Time must be in HH:MM format")
+
 
 def create_mock_request(args: argparse.Namespace, api_key: str, llm_model: str) -> Dict[str, Any]:
     """Create mock request payload compatible with Flask request structure."""
@@ -34,7 +52,9 @@ def create_mock_request(args: argparse.Namespace, api_key: str, llm_model: str) 
             'url': args.url,
             'mediaType': args.media_type,
             'api_key': api_key,
-            'llm_model': llm_model
+            'llm_model': llm_model,
+            'postDate': args.post_date,
+            'postTime': args.post_time
         },
         'files': {
             'image': MockFile(args.image) if args.image else None
@@ -116,6 +136,16 @@ def main():
         "--image",
         type=str,
         help="Path to image file to include in generated content"
+    )
+    generate_parser.add_argument(
+        "--post_date",
+        type=validate_date,
+        help="Date to schedule the post (YYYY-MM-DD)"
+    )
+    generate_parser.add_argument(
+        "--post_time",
+        type=validate_time,
+        help="Time to schedule the post (HH:MM)"
     )
 
     args = parser.parse_args()
