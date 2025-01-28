@@ -172,14 +172,14 @@ def scheduled_posts_page():
 @app.route("/save_settings", methods=["POST"])
 def save_settings_route():
     data = request.get_json()
-    if not 
+    if not data:
         return jsonify({"error": "No data provided"}), 400
-    
+
     settings = load_settings()
     settings["api_key"] = data.get("api_key")
     settings["llm_model"] = data.get("llm_model")
     settings["dark_mode"] = data.get("dark_mode")
-    
+
     if save_settings(settings):
         update_env_variables(settings)
         return jsonify({"message": "Settings saved successfully"}), 200
@@ -194,13 +194,13 @@ def get_posts():
 @app.route("/update_post", methods=["POST"])
 def update_post_route():
     data = request.get_json()
-    if not 
+    if not data:
         return jsonify({"error": "No data provided"}), 400
-    
+
     post_id = data.get("id")
     if not post_id:
         return jsonify({"error": "No post ID provided"}), 400
-    
+
     updated_post = {
         "id": post_id,
         "content": data.get("content"),
@@ -209,7 +209,7 @@ def update_post_route():
         "media_type": data.get("media_type"),
         "image_path": data.get("image_path")
     }
-    
+
     if update_post(updated_post):
         return jsonify({"message": "Post updated successfully"}), 200
     else:
@@ -218,13 +218,13 @@ def update_post_route():
 @app.route("/delete_post", methods=["POST"])
 def delete_post_route():
     data = request.get_json()
-    if not 
+    if not data:
         return jsonify({"error": "No data provided"}), 400
-    
+
     post_id = data.get("id")
     if not post_id:
         return jsonify({"error": "No post ID provided"}), 400
-    
+
     if delete_post(post_id):
         return jsonify({"message": "Post deleted successfully"}), 200
     else:
