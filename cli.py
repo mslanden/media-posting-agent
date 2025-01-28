@@ -144,8 +144,9 @@ def main():
 
             scraped_data = ""
             if args.url:
-                scraped_data = scrape_and_format_url(args.url)
-                if "Error" in scraped_data:
+                scraper = Scraper()
+                scraped_data, status = scraper.scrape(args.url)
+                if status != 200:
                     print(f"Context Scraping Error: {scraped_data}")
                     sys.exit(1)
 
