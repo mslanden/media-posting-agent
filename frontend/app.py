@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, jsonify
-from utils import scrape_and_format_url, save_markdown_file
+from utils import Scraper, save_markdown
 from agents.tweet_agent import TweetAgent
 from agents.linkedin_agent import LinkedInAgent
 from agents.article_agent import ArticleAgent
@@ -88,11 +88,13 @@ def scrape_url():
     if not url:
         return jsonify({"error": "No URL provided"}), 400
 
-    markdown_content = scrape_and_format_url(url)
-    if "Error" in markdown_content:
-        return jsonify({"error": markdown_content}), 500
+    scraper = Scraper()
+    markdown_content, status = scraper.scrape(url)
+    if status != 200:
+        return jsonify({"error": f"Failed to scrape URL: {status}"}), 500
 
-    if save_markdown_file(markdown_content):
+    filename = f"output/{url.split('//')[1].replace('/', '_')}.md"
+    if save_markdown(markdown_content, filename):
         return jsonify({"message": "Web data scraped and saved successfully"}), 200
     else:
         return jsonify({"error": "Failed to save web data"}), 500
