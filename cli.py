@@ -1,109 +1,171 @@
 import argparse
+import os
+import sys
+import uuid
+from typing import Optional, Dict, Any
 from frontend.app import generate_content
-from utils import scrape_and_format_url
+from scraper import Scraper
 from settings import load_settings
 from post_history import save_post
-import os
-import uuid
+
+__version__ = "1.0.0"
+
+def validate_url(url: str) -> str:
+    """Validate URL format."""
+    if not url.startswith(('http://', 'https://')):
+        raise argparse.ArgumentTypeError("URL must start with http:// or https://")
+    return url
+
+def create_mock_request(args: argparse.Namespace, api_key: str, llm_model: str) -> Dict[str, Any]:
+    """Create mock request payload compatible with Flask request structure."""
+    class MockFile:
+        def __init__(self, file_path: str):
+            self.file_path = file_path
+            self.filename = os.path.basename(file_path)
+
+        def save(self, save_path: str):
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            with open(self.file_path, 'rb') as src, open(save_path, 'wb') as dest:
+                dest.write(src.read())
+
+    return {
+        'form': {
+            'message': args.message,
+            'url': args.url,
+            'mediaType': args.media_type,
+            'api_key': api_key,
+            'llm_model': llm_model
+        },
+        'files': {
+            'image': MockFile(args.image) if args.image else None
+        }
+    }
+
+def handle_image(image_path: str) -> Optional[str]:
+    """Handle image file operations with proper error handling."""
+    if not os.path.exists(image_path):
+        print(f"Error: Image file not found at {image_path}")
+        sys.exit(1)
+
+    try:
+        images_dir = os.path.join("frontend", "static", "images")
+        os.makedirs(images_dir, exist_ok=True)
+        ext = os.path.splitext(image_path)[1][1:]
+        image_filename = f"image_{uuid.uuid4()}.{ext}"
+        dest_path = os.path.join(images_dir, image_filename)
+
+        with open(image_path, 'rb') as src, open(dest_path, 'wb') as dest:
+            dest.write(src.read())
+
+        return os.path.relpath(dest_path, ".")
+    except Exception as e:
+        print(f"Error handling image: {str(e)}")
+        sys.exit(1)
 
 def main():
-    parser = argparse.ArgumentParser(description="Marketing Agent CLI")
-    subparsers = parser.add_subparsers(title="commands", dest="command")
+    """Main CLI entry point for Marketing Agent."""
+    parser = argparse.ArgumentParser(
+        description="Marketing Agent CLI - AI-powered content generation tool",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=f'%(prog)s {__version__}'
+    )
+
+    subparsers = parser.add_subparsers(
+        title="available commands",
+        dest="command",
+        metavar="COMMAND"
+    )
 
     # Scrape command
-    scrape_parser = subparsers.add_parser("scrape", help="Scrape a URL")
-    scrape_parser.add_argument("url", help="URL to scrape")
+    scrape_parser = subparsers.add_parser(
+        "scrape",
+        help="Scrape content from a URL and return formatted markdown"
+    )
+    scrape_parser.add_argument(
+        "url",
+        type=validate_url,
+        help="URL to scrape content from (must include http:// or https://)"
+    )
 
     # Generate command
-    generate_parser = subparsers.add_parser("generate", help="Generate content")
-    generate_parser.add_argument("--message", help="User comments")
-    generate_parser.add_argument("--url", help="URL to scrape")
-    generate_parser.add_argument("--media_type", required=True, choices=["tweet", "linkedin", "article", "newsletter"], help="Type of media to generate")
-    generate_parser.add_argument("--image", help="Path to an image")
+    generate_parser = subparsers.add_parser(
+        "generate",
+        help="Generate marketing content using AI"
+    )
+    generate_parser.add_argument(
+        "--message",
+        type=str,
+        help="User message/prompt to guide content generation"
+    )
+    generate_parser.add_argument(
+        "--url",
+        type=validate_url,
+        help="URL to scrape and use as context for generation"
+    )
+    generate_parser.add_argument(
+        "--media_type",
+        required=True,
+        choices=["tweet", "linkedin", "article", "newsletter"],
+        help="Type of content to generate"
+    )
+    generate_parser.add_argument(
+        "--image",
+        type=str,
+        help="Path to image file to include in generated content"
+    )
 
     args = parser.parse_args()
 
-    if args.command == "scrape":
-        markdown_content = scrape_and_format_url(args.url)
-        if "Error" in markdown_content:
-            print(f"Error: {markdown_content}")
-        else:
+    if not args.command:
+        parser.print_help()
+        sys.exit(1)
+
+    try:
+        if args.command == "scrape":
+            markdown_content = Scraper(args.url)
+            if "Error" in markdown_content:
+                print(f"Scraping Error: {markdown_content}")
+                sys.exit(1)
             print(markdown_content)
-    elif args.command == "generate":
-        settings = load_settings()
-        api_key = settings.get("api_key")
-        llm_model = settings.get("llm_model")
-        if not api_key:
-            print("Error: No API key provided")
-            return
-        if not llm_model:
-            print("Error: No LLM model provided")
-            return
+            sys.exit(0)
 
-        scraped_data = ""
-        if args.url:
-            scraped_data = scrape_and_format_url(args.url)
-            if "Error" in scraped_
-                print(f"Error: {scraped_data}")
-                return
+        elif args.command == "generate":
+            settings = load_settings()
+            if not (api_key := settings.get("api_key")):
+                print("Error: No API key found in settings")
+                sys.exit(1)
+            if not (llm_model := settings.get("llm_model")):
+                print("Error: No LLM model configured in settings")
+                sys.exit(1)
 
-        image_path = None
-        if args.image:
-            images_dir = os.path.join("frontend", "static", "images")
-            os.makedirs(images_dir, exist_ok=True)
-            image_filename = f"image_{uuid.uuid4()}.{os.path.splitext(args.image)[1][1:]}"
-            image_path = os.path.join(images_dir, image_filename)
-            try:
-                with open(args.image, 'rb') as f:
-                    with open(image_path, 'wb') as img_file:
-                        img_file.write(f.read())
-                image_path = os.path.relpath(image_path, ".")
-            except Exception as e:
-                print(f"Error saving image: {e}")
-                return
+            scraped_data = ""
+            if args.url:
+                scraped_data = scrape_and_format_url(args.url)
+                if "Error" in scraped_data:
+                    print(f"Context Scraping Error: {scraped_data}")
+                    sys.exit(1)
 
-        # Simulate the request.form data
-        class MockRequestForm:
-            def get(self, key):
-                if key == "message":
-                    return args.message
-                elif key == "url":
-                    return args.url
-                elif key == "mediaType":
-                    return args.media_type
-                elif key == "api_key":
-                    return api_key
-                elif key == "llm_model":
-                    return llm_model
-                return None
-        
-        class MockRequestFiles:
-            def get(self, key):
-                if key == "image" and args.image:
-                    class MockFile:
-                        def save(self, path):
-                            pass
-                        @property
-                        def filename(self):
-                            return os.path.basename(args.image)
-                    return MockFile()
-                return None
+            image_path = handle_image(args.image) if args.image else None
 
-        class MockRequest:
-            @property
-            def form(self):
-                return MockRequestForm()
-            @property
-            def files(self):
-                return MockRequestFiles()
+            mock_request = create_mock_request(args, api_key, llm_model)
+            response = generate_content(request=mock_request)
 
-        mock_request = MockRequest()
-        
-        response = generate_content(request=mock_request)
-        if response[1] == 200:
-            print(f"Success: {response[0].get_json().get('message')}")
-        else:
-            print(f"Error: {response[0].get_json().get('error')}")
+            if response[1] == 200:
+                print(f"Success: {response[0].get_json().get('message')}")
+                if post_id := save_post(response[0].get_json()):
+                    print(f"Post saved with ID: {post_id}")
+                sys.exit(0)
+            else:
+                print(f"Generation Error: {response[0].get_json().get('error')}")
+                sys.exit(1)
+
+    except Exception as e:
+        print(f"Unexpected Error: {str(e)}")
+        sys.exit(2)
 
 if __name__ == "__main__":
     main()
