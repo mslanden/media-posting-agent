@@ -183,15 +183,15 @@ def main():
             image_path = handle_image(args.image) if args.image else None
 
             mock_request = create_mock_request(args, api_key, llm_model)
-            response = generate_content(request=mock_request)
+            response = generate_content(mock_request)
 
             if response[1] == 200:
-                print(f"Success: {response[0].get_json().get('message')}")
-                if post_id := save_post(response[0].get_json()):
+                print(f"Success: {response[0].get('message')}")
+                if post_id := save_post(response[0]):
                     print(f"Post saved with ID: {post_id}")
                 sys.exit(0)
             else:
-                print(f"Generation Error: {response[0].get_json().get('error')}")
+                print(f"Generation Error: {response[0].get('error')}")
                 sys.exit(1)
 
     except Exception as e:

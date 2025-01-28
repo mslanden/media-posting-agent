@@ -98,14 +98,23 @@ def scrape_url():
         return jsonify({"error": "Failed to save web data"}), 500
 
 @app.route("/generate", methods=["POST"])
-def generate_content():
-    message = request.form.get("message")
-    url = request.form.get("url")
-    media_type = request.form.get("mediaType")
-    image = request.files.get("image")
-    settings = load_settings()
-    api_key = settings.get("api_key")
-    llm_model = settings.get("llm_model")
+def generate_content(request_data=None):
+    if request_
+        message = request_data['form'].get("message")
+        url = request_data['form'].get("url")
+        media_type = request_data['form'].get("mediaType")
+        image = request_data['files'].get("image")
+        settings = load_settings()
+        api_key = settings.get("api_key")
+        llm_model = settings.get("llm_model")
+    else:
+        message = request.form.get("message")
+        url = request.form.get("url")
+        media_type = request.form.get("mediaType")
+        image = request.files.get("image")
+        settings = load_settings()
+        api_key = settings.get("api_key")
+        llm_model = settings.get("llm_model")
 
     if not api_key:
         return jsonify({"error": "No API key provided"}), 400
@@ -121,17 +130,28 @@ def generate_content():
             return jsonify({"error": markdown_content}), 500
         scraped_data = markdown_content
         # ========== END OF FIX ========== #
-
-    post_date = request.form.get("postDate")
-    post_time = request.form.get("postTime")
-    image_path = None
-    if image:
-        images_dir = os.path.join("frontend", "static", "images")
-        os.makedirs(images_dir, exist_ok=True)
-        image_filename = f"image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
-        image_path = os.path.join(images_dir, image_filename)
-        image.save(image_path)
-        image_path = os.path.relpath(image_path, ".")
+    if request_
+        post_date = request_data['form'].get("postDate")
+        post_time = request_data['form'].get("postTime")
+        image_path = None
+        if image:
+            images_dir = os.path.join("frontend", "static", "images")
+            os.makedirs(images_dir, exist_ok=True)
+            image_filename = f"image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
+            image_path = os.path.join(images_dir, image_filename)
+            image.save(image_path)
+            image_path = os.path.relpath(image_path, ".")
+    else:
+        post_date = request.form.get("postDate")
+        post_time = request.form.get("postTime")
+        image_path = None
+        if image:
+            images_dir = os.path.join("frontend", "static", "images")
+            os.makedirs(images_dir, exist_ok=True)
+            image_filename = f"image_{uuid.uuid4()}.{image.filename.split('.')[-1]}"
+            image_path = os.path.join(images_dir, image_filename)
+            image.save(image_path)
+            image_path = os.path.relpath(image_path, ".")
 
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
