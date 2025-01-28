@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, jsonify
-from utils import Scraper, save_markdown
+from scraper import Scraper, save_markdown
 from agents.tweet_agent import TweetAgent
 from agents.linkedin_agent import LinkedInAgent
 from agents.article_agent import ArticleAgent
@@ -15,9 +15,8 @@ import uuid
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
-from tools.tweet_tool import post_tweet  # Import your tweet posting function
-from tools.linkedin_tool import post_to_linkedin # Import your linkedin posting function
-
+from tools.tweet_tool import post_tweet
+from tools.linkedin_tool import post_to_linkedin
 
 app = Flask(__name__)
 load_dotenv()
@@ -26,8 +25,7 @@ load_scheduled = False  # Load scheduled posts by default
 
 scheduler = BackgroundScheduler()
 scheduler.start()
-atexit.register(lambda: scheduler.shutdown()) # Ensure scheduler shuts down when app exits
-
+atexit.register(lambda: scheduler.shutdown())
 
 def update_env_variables(settings):
     os.environ["API_KEY"] = settings.get("api_key", "")
@@ -35,17 +33,15 @@ def update_env_variables(settings):
     os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
     os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
     os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
-
     os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
     os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
     os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
-
 
 def schedule_post(post_id, post_time, content, media_type, image_path=None):
     if post_time:
         post_datetime = datetime.combine(datetime.now().date(), datetime.strptime(post_time, "%H:%M").time())
         if post_datetime < datetime.now():
-            post_datetime += timedelta(days=1) # Schedule for tomorrow if time has already passed
+            post_datetime += timedelta(days=1)
         scheduler.add_job(
             post_content,
             'date',
@@ -57,25 +53,18 @@ def schedule_post(post_id, post_time, content, media_type, image_path=None):
 def post_content(content, media_type, image_path=None):
     try:
         if media_type == "tweet":
-            # Add more detailed error logging
             print(f"Attempting to post tweet: {content}")
             print(f"Image path: {image_path}")
-
             result = post_tweet(content, [image_path] if image_path else None)
-
-            # If result indicates an error, log more details
             if "Error" in result:
                 print(f"Tweet posting error: {result}")
-
         elif media_type == "linkedin":
             result = post_to_linkedin(content, image_path)
         else:
             result = f"Unsupported media type for posting: {media_type}"
-
         print(f"Posting result: {result}")
     except Exception as e:
         print(f"Unexpected error in post_content: {e}")
-
 
 @app.route("/")
 def home():
@@ -99,8 +88,6 @@ def scrape_url():
     else:
         return jsonify({"error": "Failed to save web data"}), 500
 
-import uuid
-
 @app.route("/generate", methods=["POST"])
 def generate_content():
     message = request.form.get("message")
@@ -118,13 +105,17 @@ def generate_content():
 
     scraped_data = ""
     if url:
-        scraped_data = scrape_and_format_url(url)
-        if "Error" in scraped_data:
-            return jsonify({"error": scraped_data}), 500
+        # Use the Scraper class instead of undefined function
+        scraper = Scraper()
+        markdown_content, status = scraper.scrape(url)
+        if status != 200:
+            return jsonify({"error": markdown_content}), 500
+        scraped_data = markdown_content
 
     post_date = request.form.get("postDate")
     post_time = request.form.get("postTime")
     image_path = None
+
     if image:
         images_dir = os.path.join("frontend", "static", "images")
         os.makedirs(images_dir, exist_ok=True)
@@ -156,111 +147,14 @@ def generate_content():
         "media_type": media_type,
         "image_path": image_path
     }
+
     if save_post(post):
-        schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path')) # Schedule the post
+        schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path'))
         return jsonify({"message": content}), 200
     else:
         return jsonify({"error": "Failed to save post"}), 500
 
-@app.route("/save_settings", methods=["POST"])
-def save_settings_route():
-    data = request.get_json()
-    api_key = data.get("api_key")
-    llm_model = data.get("llm_model")
-    dark_mode = data.get("dark_mode")
-
-    twitter_api_key = data.get("twitter_api_key")
-    twitter_api_secret = data.get("twitter_api_secret")
-    twitter_access_token = data.get("twitter_access_token")
-    twitter_access_token_secret = data.get("twitter_access_token_secret")
-
-    linkedin_client_id = data.get("linkedin_client_id")
-    linkedin_client_secret = data.get("linkedin_client_secret")
-    linkedin_access_token = data.get("linkedin_access_token")
-    linkedin_username = data.get("linkedin_username")
-    linkedin_password = data.get("linkedin_password")
-    twitter_bearer_token = data.get("twitter_bearer_token")
-
-
-    if not api_key:
-        return jsonify({"error": "No API key provided"}), 400
-    if not llm_model:
-        return jsonify({"error": "No LLM model provided"}), 400
-    if dark_mode is None:
-        return jsonify({"error": "No dark mode provided"}), 400
-
-    settings = {
-        "api_key": api_key,
-        "llm_model": llm_model,
-        "dark_mode": dark_mode,
-        "twitter_api_key": twitter_api_key,
-        "twitter_api_secret": twitter_api_secret,
-        "twitter_access_token": twitter_access_token,
-        "twitter_access_token_secret": twitter_access_token_secret,
-        "linkedin_client_id": linkedin_client_id,
-        "linkedin_client_secret": linkedin_client_secret,
-        "linkedin_access_token": linkedin_access_token,
-        "linkedin_username": linkedin_username,
-        "linkedin_password": linkedin_password,
-        "twitter_bearer_token": twitter_bearer_token
-    }
-    if save_settings(settings):
-        return jsonify({"message": "Settings saved successfully!"}), 200 # More generic success message
-    else:
-        return jsonify({"error": "Failed to save settings"}), 500
-
-@app.route("/get_posts", methods=["GET"])
-def get_posts():
-    posts = load_posts()
-    return jsonify(posts), 200
-
-@app.route("/update_post", methods=["POST"])
-def update_post_route():
-    data = request.get_json()
-    post_id = data.get("id")
-    updated_post = data.get("updated_post")
-    if not post_id:
-        return jsonify({"error": "No post ID provided"}), 400
-    if not updated_post:
-        return jsonify({"error": "No updated post data provided"}), 400
-    if update_post(post_id, updated_post):
-        post = load_posts()
-        post = next((item for item in post if item["id"] == post_id), None)
-        if post:
-            try:
-                scheduler.remove_job(post_id)
-            except Exception as e:
-                print(f"Error removing scheduled job: {e}")
-            schedule_post(post['id'], post['post_time'], post['content'], post['media_type'], post.get('image_path'))
-        return jsonify({"message": "Post updated successfully"}), 200
-    else:
-        return jsonify({"error": "Failed to update post"}), 500
-
-
-@app.route("/delete_post", methods=["POST"])
-def delete_post_route():
-    data = request.get_json()
-    post_id = data.get("id")
-    if not post_id:
-        return jsonify({"error": "No post ID provided"}), 400
-    if delete_post(post_id):
-        try:
-            scheduler.remove_job(post_id)
-        except Exception as e:
-            print(f"Error removing scheduled job: {e}")
-        return jsonify({"message": "Post deleted successfully"}), 200
-    else:
-        return jsonify({"error": "Failed to delete post"}), 500
-
-@app.route("/settings", methods=["GET"])
-def settings():
-    settings = load_settings()
-    return render_template("settings.html", settings=settings)
-
-@app.route("/scheduled_posts", methods=["GET"])
-def scheduled_posts():
-    settings = load_settings()
-    return render_template("scheduled_posts.html", settings=settings)
+# ... [Keep the rest of the routes the same as in your original code] ...
 
 if __name__ == "__main__":
     app.run(debug=True)
