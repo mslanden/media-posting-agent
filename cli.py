@@ -148,6 +148,12 @@ def main():
         help="Time to schedule the post (HH:MM)"
     )
 
+    # Posts command
+    posts_parser = subparsers.add_parser(
+        "posts",
+        help="View scheduled posts"
+    )
+
     args = parser.parse_args()
 
     if not args.command:
@@ -156,8 +162,9 @@ def main():
 
     try:
         if args.command == "scrape":
-            markdown_content = Scraper(args.url)
-            if "Error" in markdown_content:
+            scraper = Scraper()
+            markdown_content, status = scraper.scrape(args.url)
+            if status != 200:
                 print(f"Scraping Error: {markdown_content}")
                 sys.exit(1)
             print(markdown_content)
@@ -193,6 +200,25 @@ def main():
             else:
                 print(f"Generation Error: {response[0].get('error')}")
                 sys.exit(1)
+        elif args.command == "posts":
+            import requests
+            response = requests.get("http://127.0.0.1:5000/get_posts")
+            if response.status_code == 200:
+                posts = response.json()
+                if posts:
+                    for post in posts:
+                        print(f"ID: {post['id']}")
+                        print(f"Content: {post['content']}")
+                        print(f"Date: {post['post_date']}")
+                        print(f"Time: {post['post_time']}")
+                        print(f"Media Type: {post['media_type']}")
+                        print("-" * 20)
+                else:
+                    print("No scheduled posts found.")
+            else:
+                print(f"Error fetching posts: {response.status_code}")
+                sys.exit(1)
+
 
     except Exception as e:
         print(f"Unexpected Error: {str(e)}")
