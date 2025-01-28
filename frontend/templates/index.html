@@ -150,7 +150,6 @@
                         </ul>
                         <div class="button-container">
                             <button type="submit">Submit</button>
-                            <button id="scrape-button">Scrape URL</button>
                         </div>
                     </form>
                 </div>
@@ -275,31 +274,6 @@
             document.getElementById('settings-button').addEventListener('click', function() {
                 window.location.href = '/settings';
             });
-            document
-                .getElementById("scrape-button")
-                .addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const url = document.getElementById("url").value;
-                    fetch("/scrape", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        body: "url=" + encodeURIComponent(url),
-                    })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            if (data.error) {
-                                alert("Error: " + data.error);
-                            } else {
-                                alert("Success: " + data.message);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                            alert("An error occurred while scraping the URL.");
-                        });
-                });
 
             document
                 .getElementById("chat-form")
