@@ -154,7 +154,15 @@ def generate_content():
     else:
         return jsonify({"error": "Failed to save post"}), 500
 
-# ... [Keep the rest of the routes the same as in your original code] ...
+@app.route("/settings")
+def settings_page():
+    settings = load_settings()
+    return render_template("settings.html", settings=settings)
+
+@app.route("/scheduled_posts")
+def scheduled_posts_page():
+    posts = load_posts()
+    return render_template("scheduled_posts.html", posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)
