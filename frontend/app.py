@@ -158,3 +158,74 @@ def generate_content():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/settings")
+def settings_page():
+    settings = load_settings()
+    return render_template("settings.html", settings=settings)
+
+@app.route("/scheduled_posts")
+def scheduled_posts_page():
+    posts = load_posts()
+    return render_template("scheduled_posts.html", posts=posts)
+
+@app.route("/save_settings", methods=["POST"])
+def save_settings_route():
+    data = request.get_json()
+    if not 
+        return jsonify({"error": "No data provided"}), 400
+    
+    settings = load_settings()
+    settings["api_key"] = data.get("api_key")
+    settings["llm_model"] = data.get("llm_model")
+    settings["dark_mode"] = data.get("dark_mode")
+    
+    if save_settings(settings):
+        update_env_variables(settings)
+        return jsonify({"message": "Settings saved successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to save settings"}), 500
+
+@app.route("/get_posts")
+def get_posts():
+    posts = load_posts()
+    return jsonify(posts)
+
+@app.route("/update_post", methods=["POST"])
+def update_post_route():
+    data = request.get_json()
+    if not 
+        return jsonify({"error": "No data provided"}), 400
+    
+    post_id = data.get("id")
+    if not post_id:
+        return jsonify({"error": "No post ID provided"}), 400
+    
+    updated_post = {
+        "id": post_id,
+        "content": data.get("content"),
+        "post_date": data.get("post_date"),
+        "post_time": data.get("post_time"),
+        "media_type": data.get("media_type"),
+        "image_path": data.get("image_path")
+    }
+    
+    if update_post(updated_post):
+        return jsonify({"message": "Post updated successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to update post"}), 500
+
+@app.route("/delete_post", methods=["POST"])
+def delete_post_route():
+    data = request.get_json()
+    if not 
+        return jsonify({"error": "No data provided"}), 400
+    
+    post_id = data.get("id")
+    if not post_id:
+        return jsonify({"error": "No post ID provided"}), 400
+    
+    if delete_post(post_id):
+        return jsonify({"message": "Post deleted successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to delete post"}), 500
