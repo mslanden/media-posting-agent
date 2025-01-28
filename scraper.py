@@ -156,25 +156,21 @@ class Scraper:
 
     def convert_to_markdown(self, element: BeautifulSoup) -> str:
         """Convert cleaned HTML to formatted markdown."""
-        # Custom handler for pre tags
-        def handle_pre(tag, _, convert):
-            lang = next((c.split('-')[-1] for c in tag.get('class', []) if 'language-' in c), '')
-            return f"\n```{lang}\n{convert(tag)}\n```\n"
-
-        # Create converter with custom handlers
         converter = markdownify.MarkdownConverter(
             heading_style="ATX",
             bullets=['-', '*', '+'],
             wrap_width=120,
             autolinks=False,
-            custom_elements=['pre']  # ✅ Specify custom elements to handle
+            custom_elements=['pre']
         )
 
-        # Use the converter with our custom handler
-        return converter.convert_soup(
-            element,
-            pre=handle_pre  # ✅ Pass handler directly
-        )
+        # Handle pre tags manually
+        for pre_tag in element.find_all('pre'):
+            lang = next((c.split('-')[-1] for c in pre_tag.get('class', []) if 'language-' in c), '')
+            code_content = converter.convert_soup(pre_tag)
+            pre_tag.replace_with(f"\n```{lang}\n{code_content}\n```\n")
+
+        return converter.convert_soup(element)
 
     def post_process(self, markdown: str) -> str:
         """Clean and format the final markdown content."""
