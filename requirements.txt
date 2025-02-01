@@ -5,3 +5,5 @@ markdownify
 python-dotenv
 tweepy
 python-linkedin
+apscheduler
+python-dotenv
