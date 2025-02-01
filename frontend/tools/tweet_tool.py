@@ -1,15 +1,15 @@
 import os
 import tweepy
-from settings import load_settings
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def post_tweet(tweet_text, media_paths=None):
-    settings = load_settings()
-
-    consumer_key = settings.get("twitter_api_key")
-    consumer_secret = settings.get("twitter_api_secret")
-    access_token = settings.get("twitter_access_token")
-    access_token_secret = settings.get("twitter_access_token_secret")
-    bearer_token = settings.get("twitter_bearer_token")
+    consumer_key = os.getenv("twitter_api_key")
+    consumer_secret = os.getenv("twitter_api_secret")
+    access_token = os.getenv("twitter_access_token")
+    access_token_secret = os.getenv("twitter_access_token_secret")
+    bearer_token = os.getenv("twitter_bearer_token")
 
     if not all([consumer_key, consumer_secret, access_token, access_token_secret]):
         return "Error: Missing Twitter API credentials. Please configure them in settings."

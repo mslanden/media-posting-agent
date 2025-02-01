@@ -2,9 +2,9 @@ import os
 import requests
 from typing import Optional, Union
 import logging
-from settings import load_settings
+from dotenv import load_dotenv
 
-settings = load_settings()
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -125,7 +125,7 @@ def post_to_linkedin(
 # Example usage
 if __name__ == "__main__":
     # Replace with your actual access token
-    access_token = settings.get("linkedin_access_token")
+    access_token = os.getenv("linkedin_access_token")
 
     result = post_to_linkedin(
         "Test post with LinkedIn API",
