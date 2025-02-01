@@ -3,14 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const formData = new FormData(this);
         const llmModel = document.getElementById("llm-model-select").value;
-        let apiKey = "";
-        if (llmModel === "openai") {
-            apiKey = document.getElementById("openai-api-key").value;
-        } else if (llmModel === "gemini") {
-            apiKey = document.getElementById("gemini-api-key").value;
-        } else if (llmModel === "anthropic") {
-            apiKey = document.getElementById("anthropic-api-key").value;
-        }
         const twitterApiKey = document.getElementById("twitter_api_key").value;
         const twitterApiSecret = document.getElementById("twitter_api_secret").value;
         const twitterAccessToken = document.getElementById("twitter_access_token").value;
@@ -31,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                api_key: apiKey,
                 llm_model: llmModel,
                 dark_mode: darkMode,
                 twitter_api_key: twitterApiKey,

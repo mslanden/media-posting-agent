@@ -4,7 +4,6 @@ import os
 SETTINGS_FILE = "settings.json"
 
 DEFAULT_SETTINGS = {
-    "api_key": "",
     "llm_model": "openai",
     "dark_mode": False,
     "twitter_api_key": "",
