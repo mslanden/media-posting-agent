@@ -1,4 +1,3 @@
-import os
 from agent_wrapper.base_agent import AgentWrapper
 
 class TweetAgent:
@@ -6,7 +5,7 @@ class TweetAgent:
         self.agent_wrapper = AgentWrapper(framework, api_key)
 
     def generate_tweet(self, scraped_data, user_comments="", image_path=None):
-        prompt = f"""
+        prompt = """
         You are an expert tweet writer.
         """
         if scraped_data and len(scraped_data) > 0:
