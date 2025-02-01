@@ -4,15 +4,27 @@ from agent_wrapper.base_agent import AgentWrapper
 class NoteAgent:
     def __init__(self, framework="openai", api_key=None):
         self.agent_wrapper = AgentWrapper(framework, api_key)
+        self.meta_prompt = self.load_prompt("meta_prompts/note_prompt.xml")
 
-    def generate_note(self, meta_prompt, scraped_data, image_path=None):
-        prompt = f"""
-        {meta_prompt}
-        """
+    def load_prompt(self, filepath):
+        """Load the meta prompt from the specified XML file."""
+        try:
+            with open(filepath, "r", encoding="utf-8") as file:
+                prompt = file.read()
+            return prompt
+        except Exception as e:
+            print(f"Error loading meta prompt from {filepath}: {e}")
+            return ""
+
+    def generate_note(self, scraped_data, image_path=None):
+        # Start with the meta prompt loaded from file
+        prompt = self.meta_prompt
+
+        # Append additional context from scraped data if available
         if scraped_data and len(scraped_data) > 0:
-            prompt += f"Based on the following scraped web page: {scraped_data}\n"
-        if image_path:
-            prompt += f"Also, use the information from this image: {image_path}\n"
+            prompt += f"\nBased on the following scraped web page: {scraped_data}\n"
+
+        # Generate the note using the agent wrapper
         note = self.agent_wrapper.run(prompt, image_path)
         return note
 

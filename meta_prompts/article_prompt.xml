@@ -1,0 +1,88 @@
+<ArticlePrompt>
+    <Objective>
+        Generate a well-researched, structured article by synthesizing user-provided directives and AI agent notes derived from source materials. Prioritize depth, factual accuracy, and alignment with the user's intended audience and purpose.
+    </Objective>
+
+    <UserInputs>
+        <MainTopic>[User-specified focus/headline]</MainTopic>
+        <Angle
+        >[User-defined perspective: e.g., Analytical/Opinion/How-To]</Angle>
+        <KeyPointsToEmphasize>
+            <Point>[User-provided priority 1]</Point>
+            <Point>[User-provided priority 2]</Point>
+        </KeyPointsToEmphasize>
+        <Tone>[e.g., Academic/Journalistic/Conversational]</Tone>
+        <Style>[e.g., Longform/Listicle/Interview]</Style>
+        <SectionsToInclude>
+            <Section>[Optional: Methodology/Case Studies]</Section>
+        </SectionsToInclude>
+        <SectionsToExclude>
+            <Section>[Optional section to omit]</Section>
+        </SectionsToExclude>
+    </UserInputs>
+
+    <AgentNotes>
+        <SourceSummary>
+            [AI agent's distilled summary of research materials]
+        </SourceSummary>
+        <CriticalData>
+            <Statistic>[Relevant numerical data]</Statistic>
+            <Trend>[Identified pattern/insight]</Trend>
+        </CriticalData>
+        <ExpertQuotes>
+            <Quote>[Credible source quotation]</Quote>
+        </ExpertQuotes>
+        <References>
+            <Source>[Original material citation]</Source>
+        </References>
+    </AgentNotes>
+
+    <ArticleContentRequirements>
+        <Title>
+            Create a compelling headline reflecting angle and key takeaway
+        </Title>
+        <Structure>
+            <Introduction>
+                Hook + thesis statement + article roadmap
+            </Introduction>
+            <Background>
+                Contextualize topic for target audience
+            </Background>
+            <Analysis>
+                <Subsection>
+                    Develop arguments using AgentNotes data and user priorities
+                </Subsection>
+            </Analysis>
+            <CaseStudies>
+                Incorporate real-world examples if applicable
+            </CaseStudies>
+            <Counterpoints>
+                Address opposing views (if required by Angle)
+            </Counterpoints>
+            <Conclusion>
+                Summarize insights + call-to-reflection/action
+            </Conclusion>
+        </Structure>
+    </ArticleContentRequirements>
+
+    <OutputFormat>
+        <Format>HTML</Format>
+        <Requirements>
+            <Requirement>H2/H3 headers for sections/subsections</Requirement>
+            <Requirement>Paragraphs under 150 words</Requirement>
+            <Requirement
+            >Pull quotes styled with &lt;blockquote&gt;</Requirement>
+            <Requirement>Responsive image placeholders</Requirement>
+            <Requirement>APA/MLA citation format</Requirement>
+        </Requirements>
+    </OutputFormat>
+
+    <AdditionalInstructions>
+        1. Maintain [Angle] consistency throughout<br />
+        2. Hyperlink sources but avoid affiliate links<br />
+        3. Use [User's Brand Voice Guidelines] if provided<br />
+        4. Include [Author Byline] and [Publication Date] placeholders<br />
+        5. Flag unsupported claims from AgentNotes for review<br />
+        6. Prioritize user's KeyPointsToEmphasize over AgentNotes where conflicts exist
+    </AdditionalInstructions>
+</ArticlePrompt>

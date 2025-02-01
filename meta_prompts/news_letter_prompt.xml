@@ -1,0 +1,81 @@
+<NewsletterPrompt>
+    <Objective>
+        Generate a professional, engaging newsletter by synthesizing user-provided input and structured notes from another AI agent that processed an article. Prioritize clarity, coherence, and alignment with the user's tone/style preferences.
+    </Objective>
+
+    <UserInputs>
+        <MainTopic>[User-specified central theme or subject]</MainTopic>
+        <KeyPointsToHighlight>
+            <Point>[User-provided priority 1]</Point>
+            <Point>[User-provided priority 2]</Point>
+        </KeyPointsToHighlight>
+        <Tone>[User preference: e.g., Formal/Casual/Technical]</Tone>
+        <Style>[User preference: e.g., Concise/Storytelling/Data-driven]</Style>
+        <SectionsToInclude>
+            <Section>[Optional user-defined section name]</Section>
+        </SectionsToInclude>
+        <SectionsToExclude>
+            <Section>[Optional user-defined section to omit]</Section>
+        </SectionsToExclude>
+    </UserInputs>
+
+    <AgentNotes>
+        <ArticleSummary>
+            [AI agent's condensed summary of source article]
+        </ArticleSummary>
+        <KeyPoints>
+            <Point>[Highlight 1 from article]</Point>
+            <Point>[Highlight 2 from article]</Point>
+        </KeyPoints>
+        <NotableQuotes>
+            <Quote>[Relevant direct quotation]</Quote>
+        </NotableQuotes>
+        <References>
+            <Source>[Original article URL/publication]</Source>
+        </References>
+    </AgentNotes>
+
+    <NewsletterContentRequirements>
+        <Title>
+            Create a catchy headline incorporating the main topic and user's tone
+        </Title>
+        <Structure>
+            <Introduction>
+                2-3 sentences establishing context and purpose
+            </Introduction>
+            <SummarySection>
+                Paraphrase key agent notes while connecting to user priorities
+            </SummarySection>
+            <KeyPoints>
+                Convert prioritized points into 3-5 bullet items with brief explanations
+            </KeyPoints>
+            <Quotes>
+                Include 1-2 attributed quotes if relevant to user's focus areas
+            </Quotes>
+            <VisualSuggestions>
+                Propose 1-2 contextual image/video/infographic ideas
+            </VisualSuggestions>
+            <Closing>
+                Call-to-action, follow-up items, or discussion prompts
+            </Closing>
+        </Structure>
+    </NewsletterContentRequirements>
+
+    <OutputFormat>
+        <Format>HTML</Format>
+        <Requirements>
+            <Requirement>Proper header hierarchy (H1-H3)</Requirement>
+            <Requirement>Bullet/numbered lists for key sections</Requirement>
+            <Requirement>Semantic section tags</Requirement>
+            <Requirement>No markdown, only clean HTML</Requirement>
+        </Requirements>
+    </OutputFormat>
+
+    <AdditionalInstructions>
+        1. Maintain consistent tense and perspective throughout<br />
+        2. Hyperlink references to original sources<br />
+        3. Use placeholders [User's Name] and [Date]<br />
+        4. Omit sections marked in &lt;SectionsToExclude&gt;<br />
+        5. Prioritize user-provided key points over agent notes when conflicts occur
+    </AdditionalInstructions>
+</NewsletterPrompt>

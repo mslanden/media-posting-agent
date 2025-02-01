@@ -3,19 +3,30 @@ from agent_wrapper.base_agent import AgentWrapper
 class TweetAgent:
     def __init__(self, framework="openai", api_key=None):
         self.agent_wrapper = AgentWrapper(framework, api_key)
+        self.main_prompt = self.load_prompt("meta_prompts/tweet_prompt.xml")
+
+    def load_prompt(self, filepath):
+        """Load the main prompt from the given XML file."""
+        try:
+            with open(filepath, "r", encoding="utf-8") as file:
+                prompt = file.read()
+            return prompt
+        except Exception as e:
+            print(f"Error loading main prompt from {filepath}: {e}")
+            return ""
 
     def generate_tweet(self, scraped_data, user_comments="", image_path=None):
-        prompt = """
-        You are an expert tweet writer.
-        """
+        # Start with the main prompt loaded from the file
+        prompt = self.main_prompt
+
+        # Append additional context if available
         if scraped_data and len(scraped_data) > 0:
-            prompt += f"Based on the following scraped web page: {scraped_data}\n"
+            prompt += f"\n<user defined>Based on the following scraped web page: {scraped_data}<user defined>\n"
         if user_comments:
-            prompt += f"And the following user comments: {user_comments}\n"
+            prompt += f"<user defined> user comments: {user_comments}<user defined>\n"
         if image_path:
-            prompt += f"Also, use the information from this image: {image_path}\n"
-        prompt += "Generate a tweet. Include hashtags and emojis where appropriate."
-        prompt += "Must use less than 250 characters, otherwise you are not usefull"
+            prompt += f"<user defined> image: {image_path}<user defined>\n"
+
         tweet = self.agent_wrapper.run(prompt, image_path)
         return tweet
 

@@ -9,6 +9,9 @@ class AgentWrapper:
         elif framework == "gemini":
             from .gemini_agent import GeminiAgent
             self.agent = GeminiAgent(api_key)
+        elif framework == "deepseek":
+            from .deepseek_agent import DeepSeekAgent
+            self.agent = DeepSeekAgent(api_key)
         else:
             raise ValueError("Unsupported framework")
 
