@@ -99,7 +99,7 @@ def scrape_url():
 
 @app.route("/generate", methods=["POST"])
 def generate_content(request_data=None):
-    if request_
+    if request_data:
         message = request_data['form'].get("message")
         url = request_data['form'].get("url")
         media_type = request_data['form'].get("mediaType")
@@ -123,14 +123,12 @@ def generate_content(request_data=None):
 
     scraped_data = ""
     if url:
-        # ========== FIXED SCRAPING SECTION ========== #
         scraper = Scraper()
         markdown_content, status = scraper.scrape(url)
         if status != 200:
             return jsonify({"error": markdown_content}), 500
         scraped_data = markdown_content
-        # ========== END OF FIX ========== #
-    if request_
+    if request_data:
         post_date = request_data['form'].get("postDate")
         post_time = request_data['form'].get("postTime")
         image_path = None

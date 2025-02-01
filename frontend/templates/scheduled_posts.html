@@ -18,16 +18,19 @@
         </header>
         <div class="container">
             <div id="scheduled-posts-box" class="card">
-                <h2 style="text-align: center; margin-bottom: 20px">Scheduled Posts</h2>
-                <ul id="post-list">
-                </ul>
+                <h2 style="text-align: center; margin-bottom: 20px">
+                    Scheduled Posts
+                </h2>
+                <ul id="post-list"></ul>
             </div>
         </div>
         <script src="{{ url_for('static', filename='js/scheduled_posts.js') }}"></script>
         <script>
-            document.getElementById('back-to-app-button').addEventListener('click', function() {
-                window.location.href = '/';
-            });
+            document
+                .getElementById("back-to-app-button")
+                .addEventListener("click", function () {
+                    window.location.href = "/";
+                });
             loadScheduledPostsJS();
         </script>
     </body>

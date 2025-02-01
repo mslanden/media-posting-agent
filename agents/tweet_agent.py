@@ -15,7 +15,8 @@ class TweetAgent:
             prompt += f"And the following user comments: {user_comments}\n"
         if image_path:
             prompt += f"Also, use the information from this image: {image_path}\n"
-        prompt += "Generate a tweet."
+        prompt += "Generate a tweet. Include hashtags and emojis where appropriate."
+        prompt += "Must use less than 250 characters, otherwise you are not usefull"
         tweet = self.agent_wrapper.run(prompt, image_path)
         return tweet
 

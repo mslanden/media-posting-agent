@@ -1,4 +1,4 @@
-import os
+
 from agent_wrapper.base_agent import AgentWrapper
 
 class LinkedInAgent:
