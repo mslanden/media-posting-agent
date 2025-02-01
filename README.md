@@ -41,10 +41,3 @@ This application allows users to generate content for various social media platf
 -   Python-linkedin
 -   APScheduler
 
-## Contributing
-
-Feel free to contribute to the project by submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License.
