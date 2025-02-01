@@ -14,9 +14,12 @@ This application allows users to generate content for various social media platf
 ## Setup
 
 1.  Clone the repository.
-2.  Install the required packages using `pip install -r requirements.txt`.
-3.  Create a `.env` file and add your API keys.
-4.  Run the application using `python3 frontend/app.py`.
+2.  Copy the `.env.example` file to a new file named `.env` using the command: `cp .env.example .env`
+3.  Create a virtual environment using the command: `python3 -m venv venv`
+4.  Activate the virtual environment using the command: `source venv/bin/activate`
+5.  Install the required packages using `pip install -r requirements.txt`.
+6.  Add your API keys to the `.env` file.
+7.  Run the application using `python3 frontend/app.py`.
 
 ## Usage
 
