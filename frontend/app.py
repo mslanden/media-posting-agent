@@ -7,6 +7,7 @@ from agents.tweet_agent import TweetAgent
 from agents.linkedin_agent import LinkedInAgent
 from agents.article_agent import ArticleAgent
 from agents.newsletter_agent import NewsletterAgent
+from agents.note_agent import NoteAgent
 import os
 from dotenv import load_dotenv
 from settings import save_settings, load_settings
@@ -153,16 +154,16 @@ def generate_content(request_data=None):
 
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
-        content = tweet_agent.generate_tweet(scraped_data, message, image_path)
+        content = tweet_agent.generate_tweet(note_content, message, image_path)
     elif media_type == "linkedin":
         linkedin_agent = LinkedInAgent(framework=llm_model, api_key=api_key)
-        content = linkedin_agent.generate_linkedin_post(scraped_data, message, image_path)
+        content = linkedin_agent.generate_linkedin_post(note_content, message, image_path)
     elif media_type == "article":
         article_agent = ArticleAgent(framework=llm_model, api_key=api_key)
-        content = article_agent.generate_article(scraped_data, message, image_path)
+        content = article_agent.generate_article(note_content, message, image_path)
     elif media_type == "newsletter":
         newsletter_agent = NewsletterAgent(framework=llm_model, api_key=api_key)
-        content = newsletter_agent.generate_newsletter(scraped_data, message, image_path)
+        content = newsletter_agent.generate_newsletter(note_content, message, image_path)
     else:
         return jsonify({"error": "Unsupported media type"}), 400
 
