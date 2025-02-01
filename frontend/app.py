@@ -152,9 +152,18 @@ def generate_content(request_data=None):
             image.save(image_path)
             image_path = os.path.relpath(image_path, ".")
 
+    note_agent = NoteAgent(framework=llm_model, api_key=api_key) # Instantiate NoteAgent
+    note_content = ""
+    if url:
+        with open("meta_prompts/note_prompt.xml", "r") as file:
+            meta_prompt = file.read()
+        note_content = note_agent.generate_note(meta_prompt, scraped_data, image_path)
+    else:
+        note_content = message  # Use message if no URL
+
     if media_type == "tweet":
         tweet_agent = TweetAgent(framework=llm_model, api_key=api_key)
-        content = tweet_agent.generate_tweet(note_content, message, image_path)
+        content = tweet_agent.generate_tweet(note_content, image_path=image_path) # Pass note_content
     elif media_type == "linkedin":
         linkedin_agent = LinkedInAgent(framework=llm_model, api_key=api_key)
         content = linkedin_agent.generate_linkedin_post(note_content, message, image_path)
