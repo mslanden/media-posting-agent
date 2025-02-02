@@ -5,11 +5,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def post_tweet(tweet_text, media_paths=None):
-    consumer_key = os.getenv("twitter_api_key")
-    consumer_secret = os.getenv("twitter_api_secret")
-    access_token = os.getenv("twitter_access_token")
-    access_token_secret = os.getenv("twitter_access_token_secret")
-    bearer_token = os.getenv("twitter_bearer_token")
+    consumer_key = os.getenv("TWITTER_API_KEY")
+    consumer_secret = os.getenv("TWITTER_API_SECRET")
+    access_token = os.getenv("TWITTER_ACCESS_TOKEN")
+    access_token_secret = os.getenv("TWITTER_ACCESS_SECRET")
+    bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
 
     if not all([consumer_key, consumer_secret, access_token, access_token_secret]):
         return "Error: Missing Twitter API credentials. Please configure them in settings."
