@@ -69,15 +69,10 @@
             <li style="margin-bottom: 10px;">
               <label for="llm-model-select">LLM Model:</label>
               <select id="llm-model-select">
-                <option value="openai" {% if settings.llm_model|default('openai') == 'openai' %}selected{% endif %}>
-                  OpenAI
-                </option>
-                <option value="gemini" {% if settings.llm_model|default('openai') == 'gemini' %}selected{% endif %}>
-                  Gemini
-                </option>
-                <option value="anthropic" {% if settings.llm_model|default('openai') == 'anthropic' %}selected{% endif %}>
-                  Anthropic
-                </option>
+                <option value="openai" {% if settings.llm_model|default('openai') == 'openai' %}selected{% endif %}>OpenAI</option>
+                <option value="gemini" {% if settings.llm_model|default('openai') == 'gemini' %}selected{% endif %}>Gemini</option>
+                <option value="anthropic" {% if settings.llm_model|default('openai') == 'anthropic' %}selected{% endif %}>Anthropic</option>
+                <option value="deepseek" {% if settings.llm_model|default('openai') == 'deepseek' %}selected{% endif %}>DeepSeek</option>
               </select>
             </li>
           </ul>
