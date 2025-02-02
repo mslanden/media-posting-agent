@@ -1,145 +1,98 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Settings</title>
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/styles.css') }}"
-        />
-        <style>
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-            #settings-form {
-                display: grid;
-                grid-template-columns: 1fr 2fr;
-                gap: 10px;
-                align-items: center;
-            }
-
-            #settings-form li {
-                display: contents;
-            }
-            #settings-form label {
-                text-align: right;
-                padding-right: 10px;
-            }
-            #settings-form input,
-            #settings-form select {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-            }
-            #settings-form input,
-            #settings-form select {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-            }
-
-            #settings-form button {
-                padding: 8px 12px;
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 4px;
-                font-size: 14px;
-            }
-
-            #settings-form button:hover {
-                background-color: #45a049;
-            }
-        </style>
-    </head>
-    <body {% if settings and settings.dark_mode %}class="dark-mode" {% endif %}>
-        <header>
-            <h1 style="padding-left: 20px">Settings</h1>
-            <div>
-                <button id="back-button" style="margin-right: 10px;">Back to App</button>
-            </div>
-        </header>
-        <div class="container">
-            <div id="settings-box" class="card">
-                <div id="settings-error" style="color: red;"></div>
-                <div id="settings-success" style="color: green;"></div>
-                <form id="settings-form">
-                    <ul style="list-style-type: none; padding: 0;">
-                        <li style="margin-bottom: 10px;">
-                            <label for="dark-mode-toggle">Dark Mode:</label>
-                            <input
-                                type="checkbox"
-                                id="dark-mode-toggle"
-                                {% if settings and settings.dark_mode %}checked{% endif %}
-                            />
-                            <div id="twitter-api-keys">
-                                <label for="twitter_api_key">Twitter API Key:</label>
-                                <input type="text" id="twitter_api_key" name="twitter_api_key" value="{% if settings.twitter_api_key %}{{ settings.twitter_api_key }}{% endif %}">
-                                <label for="twitter_api_secret">Twitter API Secret:</label>
-                                <input type="text" id="twitter_api_secret" name="twitter_api_secret" value="{% if settings.twitter_api_secret %}{{ settings.twitter_api_secret }}{% endif %}">
-                                <label for="twitter_access_token">Twitter Access Token:</label>
-                                <input type="text" id="twitter_access_token" name="twitter_access_token" value="{% if settings.twitter_access_token %}{{ settings.twitter_access_token }}{% endif %}">
-                                <label for="twitter_access_token_secret">Twitter Access Token Secret:</label>
-                                <input type="text" id="twitter_access_token_secret" name="twitter_access_token_secret" value="{% if settings.twitter_access_token_secret %}{{ settings.twitter_access_token_secret }}{% endif %}">
-                            </div>
-                            <div id="linkedin-api-keys">
-                                <label for="linkedin_client_id">LinkedIn Client ID:</label>
-                                <input type="text" id="linkedin_client_id" name="linkedin_client_id" value="{% if settings.linkedin_client_id %}{{ settings.linkedin_client_id }}{% endif %}">
-                                <label for="linkedin_client_secret">LinkedIn Client Secret:</label>
-                                <input type="text" id="linkedin_client_secret" name="linkedin_client_secret" value="{% if settings.linkedin_client_secret %}{{ settings.linkedin_client_secret }}{% endif %}">
-                                <label for="linkedin_access_token">LinkedIn Access Token:</label>
-                                <input type="text" id="linkedin_access_token" name="linkedin_access_token" value="{% if settings.linkedin_access_token %}{{ settings.linkedin_access_token }}{% endif %}">
-                                <label for="twitter_bearer_token">Twitter Bearer Token:</label>
-                                <input type="text" id="twitter_bearer_token" name="twitter_bearer_token" value="{% if settings.twitter_bearer_token %}{{ settings.twitter_bearer_token }}{% endif %}">
-                            </div>
-                            <div id="linkedin-credentials">
-                                <label for="linkedin-username">LinkedIn Username:</label>
-                                <input type="text" id="linkedin-username" name="linkedin_username" value="{% if settings.linkedin_username %}{{ settings.linkedin_username }}{% endif %}">
-                                <label for="linkedin-password">LinkedIn Password:</label>
-                                <input type="password" id="linkedin-password" name="linkedin_password" value="{% if settings.linkedin_password %}{{ settings.linkedin_password }}{% endif %}">
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 10px;">
-                            <label for="llm-model-select">LLM Model:</label>
-                            <select id="llm-model-select">
-                                <option
-                                    value="openai"
-                                    {% if settings.llm_model|default('openai') == 'openai' %}selected{% endif %}
-                                >
-                                    OpenAI
-                                </option>
-                                <option
-                                    value="gemini"
-                                    {% if settings.llm_model|default('openai') == 'gemini' %}selected{% endif %}
-                                >
-                                    Gemini
-                                </option>
-                                <option
-                                    value="anthropic"
-                                    {% if settings.llm_model|default('openai') == 'anthropic' %}selected{% endif %}
-                                >
-                                    Anthropic
-                                </option>
-                            </select>
-                    </ul>
-                    <div style="display: flex; justify-content: flex-end;">
-                        <button type="submit">Save Settings</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
-        <script>
-            document.getElementById('back-button').addEventListener('click', function() {
-                window.location.href = '/';
-            });
-        </script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      #settings-form {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 10px;
+        align-items: center;
+      }
+      #settings-form li {
+        display: contents;
+      }
+      #settings-form label {
+        text-align: right;
+        padding-right: 10px;
+      }
+      #settings-form input,
+      #settings-form select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+      #settings-form button {
+        padding: 8px 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      #settings-form button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body {% if settings and settings.dark_mode %}class="dark-mode"{% endif %}>
+    <header>
+      <h1 style="padding-left: 20px">Settings</h1>
+      <div>
+        <button id="back-button" style="margin-right: 10px;">Back to App</button>
+      </div>
+    </header>
+    <div class="container">
+      <div id="settings-box" class="card">
+        <div id="settings-error" style="color: red;"></div>
+        <div id="settings-success" style="color: green;"></div>
+        <form id="settings-form">
+          <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 10px;">
+              <label for="dark-mode-toggle">Dark Mode:</label>
+              <input
+                type="checkbox"
+                id="dark-mode-toggle"
+                {% if settings and settings.dark_mode %}checked{% endif %}
+              />
+            </li>
+            <li style="margin-bottom: 10px;">
+              <label for="llm-model-select">LLM Model:</label>
+              <select id="llm-model-select">
+                <option value="openai" {% if settings.llm_model|default('openai') == 'openai' %}selected{% endif %}>
+                  OpenAI
+                </option>
+                <option value="gemini" {% if settings.llm_model|default('openai') == 'gemini' %}selected{% endif %}>
+                  Gemini
+                </option>
+                <option value="anthropic" {% if settings.llm_model|default('openai') == 'anthropic' %}selected{% endif %}>
+                  Anthropic
+                </option>
+              </select>
+            </li>
+          </ul>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit">Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/dark-mode.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+    <script>
+      document.getElementById("back-button").addEventListener("click", function () {
+        window.location.href = "/";
+      });
+    </script>
+  </body>
 </html>
