@@ -33,17 +33,6 @@ scheduler.start()
 atexit.register(lambda: scheduler.shutdown())  # Ensure scheduler shuts down when app exits
 
 
-def update_env_variables(settings):
-    os.environ["API_KEY"] = settings.get("api_key", "")
-    os.environ["TWITTER_API_KEY"] = settings.get("twitter_api_key", "")
-    os.environ["TWITTER_API_SECRET"] = settings.get("twitter_api_secret", "")
-    os.environ["TWITTER_ACCESS_TOKEN"] = settings.get("twitter_access_token", "")
-    os.environ["TWITTER_ACCESS_TOKEN_SECRET"] = settings.get("twitter_access_token_secret", "")
-    os.environ["LINKEDIN_CLIENT_ID"] = settings.get("linkedin_client_id", "")
-    os.environ["LINKEDIN_CLIENT_SECRET"] = settings.get("linkedin_client_secret", "")
-    os.environ["LINKEDIN_ACCESS_TOKEN"] = settings.get("linkedin_access_token", "")
-
-
 def schedule_post(post_id, post_date, post_time, content, media_type, image_path=None):
     """
     Schedule a post using both post_date (YYYY-MM-DD) and post_time (HH:MM).
@@ -176,7 +165,6 @@ def generate_content(request_data=None):
     else:
         note_content = message
 
-
     # Pass the note_content (and optionally the message) to the appropriate agent.
     try:
         if media_type == "tweet":
@@ -216,45 +204,21 @@ def generate_content(request_data=None):
 @app.route("/save_settings", methods=["POST"])
 def save_settings_route():
     data = request.get_json()
-    api_key = data.get("api_key")
+    # Only update the settings exposed to the UI.
     llm_model = data.get("llm_model")
     dark_mode = data.get("dark_mode")
 
-    twitter_api_key = data.get("twitter_api_key")
-    twitter_api_secret = data.get("twitter_api_secret")
-    twitter_access_token = data.get("twitter_access_token")
-    twitter_access_token_secret = data.get("twitter_access_token_secret")
-
-    linkedin_client_id = data.get("linkedin_client_id")
-    linkedin_client_secret = data.get("linkedin_client_secret")
-    linkedin_access_token = data.get("linkedin_access_token")
-    linkedin_username = data.get("linkedin_username")
-    linkedin_password = data.get("linkedin_password")
-    twitter_bearer_token = data.get("twitter_bearer_token")
-
-    if not api_key:
-        return jsonify({"error": "No API key provided"}), 400
-    if not llm_model:
+    if llm_model is None:
         return jsonify({"error": "No LLM model provided"}), 400
     if dark_mode is None:
-        return jsonify({"error": "No dark mode provided"}), 400
+        return jsonify({"error": "No dark mode setting provided"}), 400
 
-    settings = {
-        "api_key": api_key,
-        "llm_model": llm_model,
-        "dark_mode": dark_mode,
-        "twitter_api_key": twitter_api_key,
-        "twitter_api_secret": twitter_api_secret,
-        "twitter_access_token": twitter_access_token,
-        "twitter_access_token_secret": twitter_access_token_secret,
-        "linkedin_client_id": linkedin_client_id,
-        "linkedin_client_secret": linkedin_client_secret,
-        "linkedin_access_token": linkedin_access_token,
-        "linkedin_username": linkedin_username,
-        "linkedin_password": linkedin_password,
-        "twitter_bearer_token": twitter_bearer_token
-    }
-    if save_settings(settings):
+    # Load the current settings from the JSON file.
+    current_settings = load_settings()
+    current_settings["llm_model"] = llm_model
+    current_settings["dark_mode"] = dark_mode
+
+    if save_settings(current_settings):
         return jsonify({"message": "Settings saved successfully!"}), 200
     else:
         return jsonify({"error": "Failed to save settings"}), 500

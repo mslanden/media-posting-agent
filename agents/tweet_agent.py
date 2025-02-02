@@ -21,9 +21,9 @@ class TweetAgent:
 
         # Append additional context if available
         if scraped_data and len(scraped_data) > 0:
-            prompt += f"\n<user defined>Based on the following scraped web page: {scraped_data}<user defined>\n"
+            prompt += f"\n<Notes>Scraped web page notes: {scraped_data}<Notes>\n"
         if user_comments:
-            prompt += f"<user defined> user comments: {user_comments}<user defined>\n"
+            prompt += f"<user comments> user comments: {user_comments}<user comments>\n"
         if image_path:
             prompt += f"<user defined> image: {image_path}<user defined>\n"
 

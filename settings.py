@@ -4,30 +4,12 @@ import os
 SETTINGS_FILE = "settings.json"
 
 DEFAULT_SETTINGS = {
-    "llm_model": "openai",
+    "llm_model": "openai",  # default model
     "dark_mode": False,
-    "twitter_api_key": "",
-    "twitter_api_secret": "",
-    "twitter_access_token": "",
-    "twitter_access_token_secret": "",
-    "linkedin_client_id": "",
-    "linkedin_client_secret": "",
-    "linkedin_access_token": "",
-    "twitter_bearer_token": "",
-    "linkedin_username": "",
-    "linkedin_password": ""
+    # You might remove "api_key" from defaults since it will be loaded from the env
 }
 
 def save_settings(settings):
-    """
-    Save the settings dictionary to a JSON file.
-
-    Args:
-        settings (dict): The settings to save.
-
-    Returns:
-        bool: True if the settings were saved successfully, False otherwise.
-    """
     try:
         with open(SETTINGS_FILE, "w") as f:
             json.dump(settings, f, indent=4)
@@ -37,21 +19,30 @@ def save_settings(settings):
         return False
 
 def load_settings():
-    """
-    Load the settings from the JSON file. If the file does not exist or is corrupted,
-    return default settings.
+    # Start with defaults
+    settings = DEFAULT_SETTINGS.copy()
 
-    Returns:
-        dict: The loaded or default settings.
-    """
+    # Load settings from file if available
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, "r") as f:
-                settings = json.load(f)
-            # Ensure all default keys exist
-            return {**DEFAULT_SETTINGS, **settings}
+                file_settings = json.load(f)
+            settings.update(file_settings)
         except Exception as e:
             print(f"Error loading settings: {e}")
-            return DEFAULT_SETTINGS.copy()
+
+    # Based on the chosen model, load the corresponding API key from the environment
+    model = settings.get("llm_model", "openai")
+    if model == "openai":
+        settings["api_key"] = os.getenv("OPENAI_API_KEY", "")
+    elif model == "anthropic":
+        settings["api_key"] = os.getenv("ANTHROPIC_API_KEY", "")
+    elif model == "gemini":
+        settings["api_key"] = os.getenv("GEMINI_API_KEY", "")
+    elif model == "deepseek":
+        settings["api_key"] = os.getenv("DEEPSEEK_API_KEY", "")
     else:
-        return DEFAULT_SETTINGS.copy()
+        # Fallback or error handling if needed
+        settings["api_key"] = ""
+
+    return settings

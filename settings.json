@@ -1,0 +1,15 @@
+{
+    "llm_model": "gemini",
+    "dark_mode": true,
+    "api_key": "your_deepseek_api_key",
+    "twitter_api_key": "",
+    "twitter_api_secret": "",
+    "twitter_access_token": "",
+    "twitter_access_token_secret": "",
+    "linkedin_client_id": "",
+    "linkedin_client_secret": "",
+    "linkedin_access_token": "",
+    "twitter_bearer_token": "",
+    "linkedin_username": "",
+    "linkedin_password": ""
+}
